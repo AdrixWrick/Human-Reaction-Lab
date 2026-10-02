@@ -451,12 +451,27 @@ function drawChart(){
  drawSeries(beforeTrials,'#19b5fe');
  drawSeries(afterTrials,'#ff5c8a');
 
- ctx.textAlign='left';ctx.fillStyle='#dfeaff';ctx.font='700 15px "Space Grotesk"';
- ctx.fillText(selected.name+' — Trial-by-Trial Reaction Time',pad.l,pad.t-25);
+```js
+// Chart header — responsive so the labels never overlap
+ctx.textAlign='left';
+ctx.fillStyle='#dfeaff';
+ctx.font='700 15px "Space Grotesk"';
 
- ctx.font='700 12px Inter';
- ctx.fillStyle='#19b5fe';ctx.fillText('Before avg: '+selected.before.toFixed(1)+' ms',pad.l+210,pad.t-25);
- ctx.fillStyle='#ff5c8a';ctx.fillText('After avg: '+selected.after.toFixed(1)+' ms',pad.l+390,pad.t-25);
+const titleY = pad.t - 25;
+const title = selected.name + ' — Trial-by-Trial Reaction Time';
+ctx.fillText(title, pad.l, titleY);
+
+ctx.font='700 12px Inter';
+
+// Place averages on a second line instead of using fixed horizontal positions
+const statsY = pad.t - 5;
+
+ctx.fillStyle='#19b5fe';
+ctx.fillText('Before avg: ' + selected.before.toFixed(1) + ' ms', pad.l, statsY);
+
+ctx.fillStyle='#ff5c8a';
+ctx.fillText('After avg: ' + selected.after.toFixed(1) + ' ms', pad.l + 190, statsY);
+```
 
  // Average markers
  const avgX=w-pad.r-8;
