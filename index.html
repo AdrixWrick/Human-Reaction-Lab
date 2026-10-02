@@ -3,3517 +3,486 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="description"
-      content="Human Reaction Lab — interactive ruler drop test reaction-time data collection and graphing software.">
-
-<title>Human Reaction Lab — Ruler Drop Test</title>
-
+<meta name="description" content="Human Reaction Lab — interactive before/after exercise reaction-time data collection and graphing software.">
+<title>Human Reaction Lab — Reaction Time Analyzer</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 
-:root {
-    --bg: #07111f;
-    --panel: #0d1b2d;
-    --panel2: #10243a;
-    --text: #f4f8ff;
-    --muted: #a9b8cb;
-
-    --before: #19b5fe;
-    --after: #ff5c8a;
-    --accent: #7c5cff;
-    --good: #35d07f;
-    --danger: #ff4d67;
-
-    --line: rgba(255,255,255,.10);
-    --shadow: 0 20px 60px rgba(0,0,0,.28);
-}
-
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 105px;
-}
-
-body {
-    margin: 0;
-    font-family: Inter, system-ui, sans-serif;
-    color: var(--text);
-
-    background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(25,181,254,.14),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 90% 15%,
-            rgba(255,92,138,.12),
-            transparent 26%
-        ),
-        linear-gradient(
-            135deg,
-            #050c16,
-            #07111f 45%,
-            #0a1422
-        );
-
-    min-height: 100vh;
-}
-
-button,
-input {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-.app {
-    max-width: 1500px;
-    margin: auto;
-    padding: 22px;
-}
-
-/* =========================
-   TOP BAR
-========================= */
-
-.topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-
-    padding: 18px 20px;
-
-    border: 1px solid var(--line);
-    background: rgba(13,27,45,.78);
-
-    backdrop-filter: blur(18px);
-
-    border-radius: 22px;
-
-    box-shadow: var(--shadow);
-
-    position: sticky;
-    top: 12px;
-
-    z-index: 20;
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.logo {
-    width: 52px;
-    height: 52px;
-
-    border-radius: 16px;
-
-    display: grid;
-    place-items: center;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--before),
-            var(--accent)
-        );
-
-    font-size: 26px;
-
-    box-shadow:
-        0 8px 28px rgba(25,181,254,.24);
-}
-
-.brand h1 {
-    font-family: "Space Grotesk";
-    font-size: 20px;
-    margin: 0;
-}
-
-.brand small {
-    color: var(--muted);
-}
-
-.actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.btn {
-    border: 1px solid var(--line);
-
-    background: #13263b;
-
-    color: var(--text);
-
-    padding: 10px 14px;
-
-    border-radius: 12px;
-
-    transition: .18s ease;
-
-    font-weight: 700;
-
-    box-shadow:
-        0 4px 0 rgba(0,0,0,.12);
-}
-
-.btn:hover {
-    transform: translateY(-3px) scale(1.02);
-
-    box-shadow:
-        0 10px 25px rgba(0,0,0,.22);
-
-    border-color:
-        rgba(255,255,255,.24);
-}
-
-.btn.primary {
-    background:
-        linear-gradient(
-            135deg,
-            #18aef4,
-            #7c5cff
-        );
-
-    border: 0;
-}
-
-.btn.danger {
-    background: rgba(255,77,103,.13);
-    color: #ff91a2;
-    border-color: rgba(255,77,103,.3);
-}
-
-.btn.green {
-    background: rgba(53,208,127,.12);
-    color: #7ff0ae;
-    border-color: rgba(53,208,127,.25);
-}
-
-/* =========================
-   TEAM / PROJECT HEADER
-========================= */
-
-.project-info {
-    margin-top: 20px;
-
-    padding: 25px;
-
-    border: 1px solid var(--line);
-
-    border-radius: 24px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(25,181,254,.10),
-            rgba(124,92,255,.08),
-            rgba(255,92,138,.06)
-        );
-
-    box-shadow: var(--shadow);
-}
-
-.project-badge {
-    display: inline-block;
-
-    padding: 8px 14px;
-
-    border-radius: 999px;
-
-    background: rgba(25,181,254,.12);
-
-    border:
-        1px solid rgba(25,181,254,.25);
-
-    color: #78d8ff;
-
-    font-size: 12px;
-
-    font-weight: 800;
-
-    text-transform: uppercase;
-
-    letter-spacing: .12em;
-}
-
-.project-info h2 {
-    margin: 13px 0 4px;
-
-    font-family: "Space Grotesk";
-
-    font-size: 32px;
-}
-
-.project-info .mentor {
-    color: var(--muted);
-
-    margin: 0 0 20px;
-}
-
-.team-grid {
-    display: grid;
-
-    grid-template-columns:
-        minmax(180px, .7fr)
-        minmax(300px, 1.3fr);
-
-    gap: 20px;
-}
-
-.team-box {
-    padding: 18px;
-
-    border-radius: 18px;
-
-    background: rgba(255,255,255,.035);
-
-    border: 1px solid var(--line);
-}
-
-.team-box h3 {
-    margin: 0 0 12px;
-
-    font-family: "Space Grotesk";
-
-    font-size: 17px;
-}
-
-.members {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 8px;
-}
-
-.member {
-    padding: 8px 11px;
-
-    border-radius: 999px;
-
-    background: rgba(255,255,255,.06);
-
-    border: 1px solid var(--line);
-
-    font-size: 13px;
-
-    font-weight: 600;
-}
-
-/* =========================
-   QUICK NAVIGATION
-========================= */
-
-.quick-nav {
-    margin-top: 15px;
-
-    display: flex;
-
-    gap: 8px;
-
-    flex-wrap: wrap;
-
-    padding: 12px;
-
-    border-radius: 18px;
-
-    background: rgba(13,27,45,.70);
-
-    border: 1px solid var(--line);
-
-    position: sticky;
-
-    top: 102px;
-
-    z-index: 15;
-
-    backdrop-filter: blur(14px);
-}
-
-.quick-nav button {
-    border: 1px solid var(--line);
-
-    background: #10243a;
-
-    color: #dce9f8;
-
-    padding: 9px 13px;
-
-    border-radius: 10px;
-
-    font-weight: 700;
-
-    font-size: 13px;
-
-    transition: .18s;
-}
-
-.quick-nav button:hover,
-.quick-nav button.active {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(25,181,254,.22),
-            rgba(124,92,255,.22)
-        );
-
-    border-color:
-        rgba(91,202,255,.45);
-
-    transform: translateY(-2px);
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    margin: 26px 0 18px;
-
-    display: grid;
-
-    grid-template-columns:
-        1.25fr .75fr;
-
-    gap: 18px;
-
-    padding: 34px;
-
-    border: 1px solid var(--line);
-
-    border-radius: 30px;
-
-    overflow: hidden;
-
-    position: relative;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(15,34,55,.96),
-            rgba(11,21,36,.9)
-        );
-
-    box-shadow: var(--shadow);
-}
-
-.hero::after {
-    content: "";
-
-    position: absolute;
-
-    width: 320px;
-    height: 320px;
-
-    border-radius: 50%;
-
-    right: -110px;
-    top: -150px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,92,138,.32),
-            transparent 68%
-        );
-}
-
-.kicker {
-    color: #77d7ff;
-
-    text-transform: uppercase;
-
-    letter-spacing: .16em;
-
-    font-weight: 800;
-
-    font-size: 12px;
-}
-
-.hero h2 {
-    font-family: "Space Grotesk";
-
-    font-size:
-        clamp(34px, 5vw, 64px);
-
-    line-height: .98;
-
-    margin: 10px 0 16px;
-
-    max-width: 850px;
-}
-
-.hero p {
-    color: var(--muted);
-
-    font-size: 16px;
-
-    max-width: 760px;
-
-    line-height: 1.7;
-}
-
-.hero-tags {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 9px;
-
-    margin-top: 20px;
-}
-
-.tag {
-    padding: 8px 12px;
-
-    border-radius: 999px;
-
-    background: rgba(255,255,255,.06);
-
-    border: 1px solid var(--line);
-
-    font-size: 13px;
-
-    font-weight: 700;
-}
-
-.visual {
-    display: grid;
-
-    place-items: center;
-
-    min-height: 230px;
-
-    position: relative;
-}
-
-.brain {
-    width: 190px;
-    height: 190px;
-
-    border-radius:
-        45% 55% 48% 52%;
-
-    border:
-        2px solid rgba(255,255,255,.18);
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            rgba(25,181,254,.5),
-            rgba(124,92,255,.18) 42%,
-            rgba(255,92,138,.12)
-        );
-
-    box-shadow:
-        0 0 80px rgba(25,181,254,.16),
-        inset 0 0 50px rgba(255,255,255,.04);
-
-    display: grid;
-
-    place-items: center;
-
-    font-size: 80px;
-
-    animation:
-        pulse 3s infinite ease-in-out;
-}
-
-@keyframes pulse {
-    50% {
-        transform: scale(1.04);
-
-        box-shadow:
-            0 0 100px rgba(124,92,255,.24);
-    }
-}
-
-/* =========================
-   MAIN GRID
-========================= */
-
-.grid {
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 18px;
-}
-
-.panel {
-    border: 1px solid var(--line);
-
-    background:
-        rgba(13,27,45,.86);
-
-    border-radius: 24px;
-
-    padding: 22px;
-
-    box-shadow: var(--shadow);
-}
-
-.panel.full {
-    grid-column: 1 / -1;
-}
-
-.panel-title {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 10px;
-
-    margin-bottom: 16px;
-}
-
-.panel h3 {
-    margin: 0;
-
-    font-family: "Space Grotesk";
-
-    font-size: 20px;
-}
-
-.muted {
-    color: var(--muted);
-}
-
-/* =========================
-   FORM
-========================= */
-
-.form-grid {
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 14px;
-}
-
-label {
-    display: block;
-
-    font-size: 12px;
-
-    font-weight: 800;
-
-    color: #c8d5e5;
-
-    margin: 0 0 7px;
-
-    text-transform: uppercase;
-
-    letter-spacing: .06em;
-}
-
-input {
-    width: 100%;
-
-    padding: 13px 14px;
-
-    border-radius: 12px;
-
-    border:
-        1px solid var(--line);
-
-    outline: 0;
-
-    background: #091728;
-
-    color: white;
-
-    transition: .18s;
-}
-
-input:focus {
-    border-color: #59caff;
-
-    box-shadow:
-        0 0 0 4px rgba(25,181,254,.1);
-}
-
-.section-before {
-    border-left:
-        4px solid var(--before);
-
-    padding-left: 14px;
-}
-
-.section-after {
-    border-left:
-        4px solid var(--after);
-
-    padding-left: 14px;
-}
-
-.data-row {
-    display: grid;
-
-    grid-template-columns:
-        1.1fr 1fr 1fr auto;
-
-    gap: 10px;
-
-    align-items: end;
-
-    margin-bottom: 10px;
-}
-
-.row-actions {
-    display: flex;
-
-    gap: 6px;
-}
-
-.mini {
-    padding: 9px 11px;
-
-    border-radius: 10px;
-
-    border:
-        1px solid var(--line);
-
-    background: #14283e;
-
-    color: white;
-
-    font-weight: 800;
-
-    transition: .18s;
-}
-
-.mini:hover {
-    transform: translateY(-2px);
-}
-
-/* =========================
-   STATS
-========================= */
-
-.stats {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap: 12px;
-}
-
-.stat {
-    padding: 18px;
-
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.06),
-            rgba(255,255,255,.025)
-        );
-
-    border:
-        1px solid var(--line);
-}
-
-.stat .label {
-    color: var(--muted);
-
-    font-size: 12px;
-
-    font-weight: 800;
-
-    text-transform: uppercase;
-}
-
-.stat .value {
-    font-family: "Space Grotesk";
-
-    font-size: 31px;
-
-    font-weight: 700;
-
-    margin-top: 7px;
-}
-
-.before-text {
-    color: var(--before);
-}
-
-.after-text {
-    color: var(--after);
-}
-
-/* =========================
-   TABLE
-========================= */
-
-.table-wrap {
-    overflow: auto;
-
-    border:
-        1px solid var(--line);
-
-    border-radius: 16px;
-}
-
-table {
-    width: 100%;
-
-    border-collapse: collapse;
-
-    min-width: 720px;
-}
-
-th,
-td {
-    padding: 13px 14px;
-
-    text-align: left;
-
-    border-bottom:
-        1px solid var(--line);
-}
-
-th {
-    font-size: 11px;
-
-    text-transform: uppercase;
-
-    letter-spacing: .08em;
-
-    color: #aebdd0;
-
-    background:
-        rgba(255,255,255,.03);
-}
-
-td {
-    font-weight: 600;
-}
-
-.pill {
-    display: inline-block;
-
-    padding: 5px 9px;
-
-    border-radius: 999px;
-
-    font-size: 12px;
-
-    font-weight: 800;
-}
-
-.pill.faster {
-    background:
-        rgba(53,208,127,.13);
-
-    color: #75eda9;
-}
-
-.pill.slower {
-    background:
-        rgba(255,92,138,.13);
-
-    color: #ff9ab4;
-}
-
-.pill.same {
-    background:
-        rgba(169,184,203,.12);
-
-    color: #c7d2df;
-}
-
-.empty {
-    padding: 36px;
-
-    text-align: center;
-
-    color: var(--muted);
-}
-
-/* =========================
-   CHART
-========================= */
-
-.chart-box {
-    height: 520px;
-
-    position: relative;
-}
-
-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.legend {
-    display: flex;
-
-    gap: 18px;
-
-    flex-wrap: wrap;
-
-    margin: 8px 0 14px;
-}
-
-.legend span {
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    font-size: 12px;
-
-    font-weight: 800;
-
-    color: #c4d0df;
-}
-
-.dot {
-    width: 11px;
-    height: 11px;
-
-    border-radius: 50%;
-}
-
-.dot.before {
-    background: var(--before);
-}
-
-.dot.after {
-    background: var(--after);
-}
-
-/* =========================
-   NOTICES
-========================= */
-
-.notice {
-    padding: 11px 13px;
-
-    border-radius: 12px;
-
-    background:
-        rgba(124,92,255,.1);
-
-    border:
-        1px solid rgba(124,92,255,.25);
-
-    color: #cfc5ff;
-
-    font-size: 12px;
-
-    line-height: 1.5;
-}
-
-/* =========================
-   TOAST
-========================= */
-
-.toast {
-    position: fixed;
-
-    right: 22px;
-    bottom: 22px;
-
-    z-index: 50;
-
-    padding: 13px 16px;
-
-    border-radius: 13px;
-
-    background: #152a40;
-
-    border:
-        1px solid rgba(255,255,255,.16);
-
-    box-shadow: var(--shadow);
-
-    transform:
-        translateY(20px);
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transition: .25s;
-}
-
-.toast.show {
-    transform:
-        translateY(0);
-
-    opacity: 1;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal {
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        rgba(1,7,13,.78);
-
-    backdrop-filter:
-        blur(12px);
-
-    display: grid;
-
-    place-items: center;
-
-    z-index: 100;
-
-    padding: 18px;
-}
-
-.modal-card {
-    max-width: 760px;
-
-    width: 100%;
-
-    background: #0d1b2d;
-
-    border:
-        1px solid var(--line);
-
-    border-radius: 28px;
-
-    padding: 28px;
-
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.45);
-}
-
-.mode-grid {
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 14px;
-
-    margin-top: 20px;
-}
-
-.mode {
-    text-align: left;
-
-    padding: 22px;
-
-    border-radius: 18px;
-
-    border:
-        1px solid var(--line);
-
-    background: #10243a;
-
-    color: white;
-
-    transition: .18s;
-}
-
-.mode:hover {
-    transform:
-        translateY(-5px);
-
-    border-color:
-        #5bcaff;
-
-    box-shadow:
-        0 16px 40px rgba(25,181,254,.13);
-}
-
-.mode strong {
-    font-family: "Space Grotesk";
-
-    font-size: 20px;
-
-    display: block;
-
-    margin-bottom: 8px;
-}
-
-.mode span {
-    color: var(--muted);
-
-    font-size: 13px;
-
-    line-height: 1.5;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer {
-    text-align: center;
-
-    color: #71839a;
-
-    font-size: 12px;
-
-    padding: 22px;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 900px) {
-
-    .hero,
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    .panel.full {
-        grid-column: auto;
-    }
-
-    .visual {
-        min-height: 180px;
-    }
-
-    .data-row {
-        grid-template-columns:
-            1fr 1fr;
-    }
-
-    .data-row .row-actions {
-        grid-column: 1 / -1;
-    }
-
-    .team-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 600px) {
-
-    .app {
-        padding: 10px;
-    }
-
-    .topbar {
-        position: static;
-
-        padding: 13px;
-    }
-
-    .actions {
-        display: none;
-    }
-
-    .quick-nav {
-        position: static;
-
-        overflow-x: auto;
-
-        flex-wrap: nowrap;
-    }
-
-    .quick-nav button {
-        flex: 0 0 auto;
-    }
-
-    .hero {
-        padding: 22px;
-
-        border-radius: 22px;
-    }
-
-    .hero h2 {
-        font-size: 39px;
-    }
-
-    .form-grid,
-    .stats,
-    .mode-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .chart-box {
-        height: 420px;
-    }
-
-    .project-info h2 {
-        font-size: 27px;
-    }
-
-    .team-grid {
-        grid-template-columns: 1fr;
-    }
+:root{
+--bg:#07111f; --panel:#0d1b2d; --panel2:#10243a; --text:#f4f8ff; --muted:#a9b8cb;
+--before:#19b5fe; --after:#ff5c8a; --accent:#7c5cff; --good:#35d07f; --danger:#ff4d67;
+--line:rgba(255,255,255,.10); --shadow:0 20px 60px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+margin:0; font-family:Inter,system-ui,sans-serif; color:var(--text);
+background:
+radial-gradient(circle at 10% 10%, rgba(25,181,254,.14), transparent 28%),
+radial-gradient(circle at 90% 15%, rgba(255,92,138,.12), transparent 26%),
+linear-gradient(135deg,#050c16,#07111f 45%,#0a1422);
+min-height:100vh;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.app{max-width:1500px;margin:auto;padding:22px}
+.topbar{
+display:flex;justify-content:space-between;align-items:center;gap:16px;
+padding:18px 20px;border:1px solid var(--line);background:rgba(13,27,45,.78);
+backdrop-filter:blur(18px);border-radius:22px;box-shadow:var(--shadow);position:sticky;top:12px;z-index:20;
+}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{
+width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
+background:linear-gradient(135deg,var(--before),var(--accent));font-size:26px;
+box-shadow:0 8px 28px rgba(25,181,254,.24)
+}
+.brand h1{font-family:"Space Grotesk";font-size:20px;margin:0}
+.brand small{color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.btn{
+border:1px solid var(--line);background:#13263b;color:var(--text);padding:10px 14px;border-radius:12px;
+transition:.18s ease; font-weight:700; box-shadow:0 4px 0 rgba(0,0,0,.12)
+}
+.btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 10px 25px rgba(0,0,0,.22);border-color:rgba(255,255,255,.24)}
+.btn.primary{background:linear-gradient(135deg,#18aef4,#7c5cff);border:0}
+.btn.danger{background:rgba(255,77,103,.13);color:#ff91a2;border-color:rgba(255,77,103,.3)}
+.btn.green{background:rgba(53,208,127,.12);color:#7ff0ae;border-color:rgba(53,208,127,.25)}
+
+.hero{
+margin:26px 0 18px; display:grid;grid-template-columns:1.25fr .75fr;gap:18px;
+padding:34px;border:1px solid var(--line);border-radius:30px;overflow:hidden;position:relative;
+background:linear-gradient(135deg,rgba(15,34,55,.96),rgba(11,21,36,.9));
+box-shadow:var(--shadow)
+}
+.hero:after{content:"";position:absolute;width:320px;height:320px;border-radius:50%;right:-110px;top:-150px;background:radial-gradient(circle,rgba(255,92,138,.32),transparent 68%)}
+.kicker{color:#77d7ff;text-transform:uppercase;letter-spacing:.16em;font-weight:800;font-size:12px}
+.hero h2{font-family:"Space Grotesk";font-size:clamp(34px,5vw,64px);line-height:.98;margin:10px 0 16px;max-width:850px}
+.hero p{color:var(--muted);font-size:16px;max-width:760px;line-height:1.7}
+.hero-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.tag{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:13px;font-weight:700}
+.visual{display:grid;place-items:center;min-height:230px;position:relative}
+.brain{
+width:190px;height:190px;border-radius:45% 55% 48% 52%;border:2px solid rgba(255,255,255,.18);
+background:radial-gradient(circle at 35% 30%,rgba(25,181,254,.5),rgba(124,92,255,.18) 42%,rgba(255,92,138,.12));
+box-shadow:0 0 80px rgba(25,181,254,.16), inset 0 0 50px rgba(255,255,255,.04);
+display:grid;place-items:center;font-size:80px;animation:pulse 3s infinite ease-in-out
+}
+@keyframes pulse{50%{transform:scale(1.04);box-shadow:0 0 100px rgba(124,92,255,.24)}}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel{
+border:1px solid var(--line);background:rgba(13,27,45,.86);border-radius:24px;padding:22px;
+box-shadow:var(--shadow)
+}
+.panel.full{grid-column:1/-1}
+.panel-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+.panel h3{margin:0;font-family:"Space Grotesk";font-size:20px}
+.muted{color:var(--muted)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{display:block;font-size:12px;font-weight:800;color:#c8d5e5;margin:0 0 7px;text-transform:uppercase;letter-spacing:.06em}
+input{
+width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);outline:0;
+background:#091728;color:white;transition:.18s
+}
+input:focus{border-color:#59caff;box-shadow:0 0 0 4px rgba(25,181,254,.1)}
+.section-before{border-left:4px solid var(--before);padding-left:14px}
+.section-after{border-left:4px solid var(--after);padding-left:14px}
+.data-row{display:grid;grid-template-columns:1.1fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:10px}
+.row-actions{display:flex;gap:6px}
+.mini{padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:#14283e;color:white;font-weight:800}
+.mini:hover{transform:translateY(-2px)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{
+padding:18px;border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.025));
+border:1px solid var(--line)
+}
+.stat .label{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase}
+.stat .value{font-family:"Space Grotesk";font-size:31px;font-weight:700;margin-top:7px}
+.before-text{color:var(--before)} .after-text{color:var(--after)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th,td{padding:13px 14px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#aebdd0;background:rgba(255,255,255,.03)}
+td{font-weight:600}
+.pill{display:inline-block;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800}
+.pill.faster{background:rgba(53,208,127,.13);color:#75eda9}
+.pill.slower{background:rgba(255,92,138,.13);color:#ff9ab4}
+.pill.same{background:rgba(169,184,203,.12);color:#c7d2df}
+.chart-box{height:520px;position:relative}
+canvas{width:100%;height:100%;display:block}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 14px}
+.legend span{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:#c4d0df}
+.dot{width:11px;height:11px;border-radius:50%}.dot.before{background:var(--before)}.dot.after{background:var(--after)}
+.empty{padding:36px;text-align:center;color:var(--muted)}
+.toast{
+position:fixed;right:22px;bottom:22px;z-index:50;padding:13px 16px;border-radius:13px;
+background:#152a40;border:1px solid rgba(255,255,255,.16);box-shadow:var(--shadow);
+transform:translateY(20px);opacity:0;pointer-events:none;transition:.25s
+}
+.toast.show{transform:translateY(0);opacity:1}
+.modal{
+position:fixed;inset:0;background:rgba(1,7,13,.78);backdrop-filter:blur(12px);display:grid;place-items:center;
+z-index:100;padding:18px
+}
+.modal-card{max-width:760px;width:100%;background:#0d1b2d;border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:0 30px 100px rgba(0,0,0,.45)}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.mode{
+text-align:left;padding:22px;border-radius:18px;border:1px solid var(--line);background:#10243a;color:white;
+transition:.18s
+}
+.mode:hover{transform:translateY(-5px);border-color:#5bcaff;box-shadow:0 16px 40px rgba(25,181,254,.13)}
+.mode strong{font-family:"Space Grotesk";font-size:20px;display:block;margin-bottom:8px}
+.mode span{color:var(--muted);font-size:13px;line-height:1.5}
+.footer{text-align:center;color:#71839a;font-size:12px;padding:22px}
+.notice{padding:11px 13px;border-radius:12px;background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.25);color:#cfc5ff;font-size:12px;line-height:1.5}
+.hidden{display:none!important}
+@media(max-width:900px){
+.hero,.grid{grid-template-columns:1fr}.panel.full{grid-column:auto}.visual{min-height:180px}
+.data-row{grid-template-columns:1fr 1fr}.data-row .row-actions{grid-column:1/-1}
+}
+@media(max-width:600px){
+.app{padding:10px}.topbar{position:static;padding:13px}.actions{display:none}
+.hero{padding:22px;border-radius:22px}.hero h2{font-size:39px}
+.form-grid,.stats,.mode-grid{grid-template-columns:1fr}.chart-box{height:420px}
 }
 </style>
 </head>
-
 <body>
-
-<!-- =========================
-     DISPLAY MODE MODAL
-========================= -->
-
 <div id="modeModal" class="modal">
-
-    <div class="modal-card">
-
-        <div class="kicker">
-            HUMAN REACTION LAB
-        </div>
-
-        <h2 style="
-            font-family:'Space Grotesk';
-            font-size:34px;
-            margin:8px 0;
-        ">
-            Choose your display mode
-        </h2>
-
-        <p class="muted">
-            The interface will adapt its layout, spacing and chart
-            proportions for the device you are using.
-        </p>
-
-        <div class="mode-grid">
-
-            <button
-                class="mode"
-                onclick="setMode('desktop')"
-            >
-                <strong>
-                    🖥️ Desktop Browser
-                </strong>
-
-                <span>
-                    Wide dashboard, large chart and full data table.
-                    Recommended for a booth laptop or PC.
-                </span>
-            </button>
-
-            <button
-                class="mode"
-                onclick="setMode('mobile')"
-            >
-                <strong>
-                    📱 Mobile Browser
-                </strong>
-
-                <span>
-                    Compact controls, touch-friendly buttons and
-                    mobile-first chart layout.
-                </span>
-            </button>
-
-        </div>
-
-        <div
-            style="margin-top:18px"
-            class="notice"
-        >
-            Tip: You can switch modes later from the ⚙️ Display button.
-        </div>
-
-    </div>
-
+<div class="modal-card">
+<div class="kicker">HUMAN REACTION LAB</div>
+<h2 style="font-family:'Space Grotesk';font-size:34px;margin:8px 0">Choose your display mode</h2>
+<p class="muted">The interface will adapt its layout, spacing and chart proportions for the device you are using.</p>
+<div class="mode-grid">
+<button class="mode" onclick="setMode('desktop')"><strong>🖥️ Desktop Browser</strong><span>Wide dashboard, large chart and full data table. Recommended for a booth laptop/PC.</span></button>
+<button class="mode" onclick="setMode('mobile')"><strong>📱 Mobile Browser</strong><span>Compact controls, touch-friendly buttons and mobile-first chart layout.</span></button>
 </div>
-
+<div style="margin-top:18px" class="notice">Tip: You can switch modes later from the ⚙️ Display button.</div>
+</div>
+</div>
 
 <div class="app">
-
-<!-- =========================
-     TOP BAR
-========================= -->
-
 <header class="topbar">
-
-    <div class="brand">
-
-        <div class="logo">
-            ⚡
-        </div>
-
-        <div>
-            <h1>
-                Human Reaction Lab
-            </h1>
-
-            <small>
-                Ruler Drop Test • Reaction Time Analyzer
-            </small>
-        </div>
-
-    </div>
-
-    <div class="actions">
-
-        <button
-            class="btn"
-            onclick="showMode()"
-        >
-            ⚙️ Display
-        </button>
-
-        <button
-            class="btn"
-            onclick="loadExample()"
-        >
-            ✨ Load Example
-        </button>
-
-        <button
-            class="btn"
-            onclick="exportCSV()"
-        >
-            ⬇️ Export CSV
-        </button>
-
-        <button
-            class="btn"
-            onclick="downloadGraph()"
-        >
-            🖼️ Download Graph
-        </button>
-
-        <button
-            class="btn danger"
-            onclick="clearAll()"
-        >
-            🗑️ Clear All
-        </button>
-
-    </div>
-
+<div class="brand">
+<div class="logo">⚡</div>
+<div><h1>Human Reaction Lab</h1><small>Reaction Time Analyzer</small></div>
+</div>
+<div class="actions">
+<button class="btn" onclick="showMode()">⚙️ Display</button>
+<button class="btn" onclick="loadExample()">✨ Load Example</button>
+<button class="btn" onclick="exportCSV()">⬇️ Export CSV</button>
+<button class="btn" onclick="downloadGraph()">🖼️ Download Graph</button>
+<button class="btn danger" onclick="clearAll()">🗑️ Clear All</button>
+</div>
 </header>
 
-
-<!-- =========================
-     PROJECT / TEAM INFORMATION
-========================= -->
-
-<section class="project-info">
-
-    <span class="project-badge">
-        🧪 Science Exhibition Project
-    </span>
-
-    <h2>
-        Based on Ruler Drop Test
-    </h2>
-
-    <p class="mentor">
-        <strong>Mentor Teacher:</strong>
-        Md. Arif
-    </p>
-
-    <div class="team-grid">
-
-        <div class="team-box">
-
-            <h3>
-                👥 Team
-            </h3>
-
-            <p
-                class="muted"
-                style="margin:0;line-height:1.6"
-            >
-                Human Reaction Lab
-                <br>
-                Interactive Reaction-Time Analysis
-            </p>
-
-        </div>
-
-
-        <div class="team-box">
-
-            <h3>
-                🧑‍🔬 Members
-            </h3>
-
-            <div class="members">
-
-                <span class="member">
-                    Adrita Bandyopadhyay
-                </span>
-
-                <span class="member">
-                    Anubhav Paul
-                </span>
-
-                <span class="member">
-                    Aayush Bacchar
-                </span>
-
-                <span class="member">
-                    Ayush Kumar
-                </span>
-
-                <span class="member">
-                    Aman Ghosh
-                </span>
-
-                <span class="member">
-                    Asmita Mandal
-                </span>
-
-                <span class="member">
-                    Debosmita Maity
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     QUICK NAVIGATION
-========================= -->
-
-<nav
-    class="quick-nav"
-    aria-label="Page navigation"
->
-
-    <button
-        onclick="scrollToSection('experimentSection')"
-    >
-        🧪 Experiment
-    </button>
-
-    <button
-        onclick="scrollToSection('dashboardSection')"
-    >
-        📈 Dashboard
-    </button>
-
-    <button
-        onclick="scrollToSection('dataSection')"
-    >
-        👥 Participants
-    </button>
-
-    <button
-        onclick="scrollToSection('graphSection')"
-    >
-        🌌 Graph
-    </button>
-
-</nav>
-
-
-<!-- =========================
-     HERO
-========================= -->
-
 <section class="hero">
-
-    <div>
-
-        <div class="kicker">
-            RULER DROP TEST • INTERACTIVE DATA LAB
-        </div>
-
-        <h2>
-            Does exercise change how fast we react?
-        </h2>
-
-        <p>
-            Record participant reaction times before and after a short
-            exercise session using the ruler drop test. The lab calculates
-            each participant's average, compares the change, and builds a
-            presentation-ready visualization automatically.
-        </p>
-
-        <div class="hero-tags">
-
-            <span class="tag">
-                📏 Ruler Drop
-            </span>
-
-            <span class="tag">
-                👀 See
-            </span>
-
-            <span class="tag">
-                🧠 Think
-            </span>
-
-            <span class="tag">
-                ✋ React
-            </span>
-
-            <span class="tag">
-                🏃 Exercise
-            </span>
-
-            <span class="tag">
-                📊 Compare
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <div class="visual">
-
-        <div class="brain">
-            🧠
-        </div>
-
-    </div>
-
+<div>
+<div class="kicker">SCIENCE EXHIBITION • INTERACTIVE DATA LAB</div>
+<h2>Does exercise change how fast we react?</h2>
+<p>Record participant reaction times before and after a short exercise session. The lab calculates each participant’s average, compares the change, and builds a presentation-ready visualization automatically.</p>
+<div class="hero-tags">
+<span class="tag">👀 See</span><span class="tag">🧠 Think</span><span class="tag">✋ React</span>
+<span class="tag">🏃 Exercise</span><span class="tag">📊 Compare</span>
+</div>
+</div>
+<div class="visual"><div class="brain">🧠</div></div>
 </section>
-
 
 <div class="grid">
-
-<!-- =========================
-     ADD PARTICIPANT
-========================= -->
-
-<section
-    class="panel"
-    id="experimentSection"
->
-
-    <div class="panel-title">
-
-        <h3>
-            ➕ Add Participant
-        </h3>
-
-        <span class="muted">
-            Data is saved in this browser
-        </span>
-
-    </div>
-
-
-    <div class="form-grid">
-
-        <div style="grid-column:1/-1">
-
-            <label>
-                Participant Name
-            </label>
-
-            <input
-                id="participantName"
-                placeholder="e.g. Participant 01"
-            >
-
-        </div>
-
-    </div>
-
-
-    <div
-        class="section-before"
-        style="margin-top:18px"
-    >
-
-        <label style="color:#7bd9ff">
-            Before Exercise — reaction times (ms)
-        </label>
-
-        <div id="beforeInputs"></div>
-
-        <button
-            class="btn"
-            onclick="addInput('before')"
-        >
-            ＋ Add Data
-        </button>
-
-    </div>
-
-
-    <div
-        class="section-after"
-        style="margin-top:18px"
-    >
-
-        <label style="color:#ff9ab4">
-            After Exercise — reaction times (ms)
-        </label>
-
-        <div id="afterInputs"></div>
-
-        <button
-            class="btn"
-            onclick="addInput('after')"
-        >
-            ＋ Add Data
-        </button>
-
-    </div>
-
-
-    <div
-        style="
-            display:flex;
-            gap:9px;
-            flex-wrap:wrap;
-            margin-top:18px;
-        "
-    >
-
-        <button
-            class="btn primary"
-            onclick="addParticipant()"
-        >
-            ⚡ Add Participant
-        </button>
-
-        <button
-            class="btn"
-            onclick="resetForm()"
-        >
-            ↺ Reset
-        </button>
-
-    </div>
-
-
-    <p
-        class="muted"
-        style="
-            font-size:12px;
-            margin-top:13px;
-        "
-    >
-        Enter one or multiple trials. If one value is entered,
-        it is used directly. If two or more are entered, their
-        arithmetic mean is calculated.
-    </p>
-
-</section>
-
-
-<!-- =========================
-     DASHBOARD
-========================= -->
-
-<section
-    class="panel"
-    id="dashboardSection"
->
-
-    <div class="panel-title">
-
-        <h3>
-            📈 Lab Dashboard
-        </h3>
-
-        <span class="muted">
-            Live summary
-        </span>
-
-    </div>
-
-
-    <div class="stats">
-
-        <div class="stat">
-
-            <div class="label">
-                Total Participants
-            </div>
-
-            <div
-                id="totalParticipants"
-                class="value"
-            >
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="label before-text">
-                Before Average
-            </div>
-
-            <div
-                id="overallBefore"
-                class="value before-text"
-            >
-                —
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="label after-text">
-                After Average
-            </div>
-
-            <div
-                id="overallAfter"
-                class="value after-text"
-            >
-                —
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div
-        style="margin-top:14px"
-        class="notice"
-    >
-        Change is calculated as
-        <b>Before − After</b>.
-        A positive value means the participant's average reaction
-        time decreased after exercise.
-    </div>
-
-
-    <div style="margin-top:20px">
-
-        <div class="panel-title">
-
-            <h3>
-                🧪 Experimental Question
-            </h3>
-
-        </div>
-
-        <p
-            class="muted"
-            style="
-                line-height:1.7;
-                margin-bottom:0;
-            "
-        >
-
-            <b style="color:white">
-                Hypothesis:
-            </b>
-
-            After exercise, participants may show a change in
-            reaction time because physical activity can alter
-            alertness and physiological arousal.
-
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     PARTICIPANT DATA
-========================= -->
-
-<section
-    class="panel full"
-    id="dataSection"
->
-
-    <div class="panel-title">
-
-        <h3>
-            👥 Participant Data
-        </h3>
-
-        <span
-            id="dataCount"
-            class="muted"
-        >
-            0 records
-        </span>
-
-    </div>
-
-    <div
-        id="tableArea"
-        class="empty"
-    >
-        No participants yet.
-        Add a participant or load the example dataset.
-    </div>
-
-</section>
-
-
-<!-- =========================
-     GRAPH
-========================= -->
-
-<section
-    class="panel full"
-    id="graphSection"
->
-
-    <div class="panel-title">
-
-        <h3>
-            🌌 Reaction Time Observatory
-        </h3>
-
-        <span
-            id="graphParticipantLabel"
-            class="muted"
-        >
-            No participant selected
-        </span>
-
-    </div>
-
-
-    <div class="legend">
-
-        <span>
-            <i class="dot before"></i>
-            Before Exercise
-        </span>
-
-        <span>
-            <i class="dot after"></i>
-            After Exercise
-        </span>
-
-    </div>
-
-
-    <div class="chart-box">
-
-        <canvas id="chart"></canvas>
-
-    </div>
-
-</section>
-
+<section class="panel">
+<div class="panel-title"><h3>➕ Add Participant</h3><span class="muted">Data is saved in this browser</span></div>
+<div class="form-grid">
+<div style="grid-column:1/-1">
+<label>Participant Name</label>
+<input id="participantName" placeholder="e.g. Participant 01">
+</div>
 </div>
 
-
-<div class="footer">
-
-    Human Reaction Lab •
-    Based on Ruler Drop Test •
-    Built for interactive science-exhibition data collection •
-    Your data stays locally in this browser
-
+<div class="section-before" style="margin-top:18px">
+<label style="color:#7bd9ff">Before Exercise — reaction times (ms)</label>
+<div id="beforeInputs"></div>
+<button class="btn" onclick="addInput('before')">＋ Add Data</button>
 </div>
 
+<div class="section-after" style="margin-top:18px">
+<label style="color:#ff9ab4">After Exercise — reaction times (ms)</label>
+<div id="afterInputs"></div>
+<button class="btn" onclick="addInput('after')">＋ Add Data</button>
 </div>
 
+<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:18px">
+<button class="btn primary" onclick="addParticipant()">⚡ Add Participant</button>
+<button class="btn" onclick="resetForm()">↺ Reset</button>
+</div>
+<p class="muted" style="font-size:12px;margin-top:13px">Enter one or multiple trials. If one value is entered, it is used directly. If two or more are entered, their arithmetic mean is calculated.</p>
+</section>
 
-<div
-    id="toast"
-    class="toast"
-></div>
+<section class="panel">
+<div class="panel-title"><h3>📈 Lab Dashboard</h3><span class="muted">Live summary</span></div>
+<div class="stats">
+<div class="stat"><div class="label">Total Participants</div><div id="totalParticipants" class="value">0</div></div>
+<div class="stat"><div class="label before-text">Before Average</div><div id="overallBefore" class="value before-text">—</div></div>
+<div class="stat"><div class="label after-text">After Average</div><div id="overallAfter" class="value after-text">—</div></div>
+</div>
+<div style="margin-top:14px" class="notice">Change is calculated as <b>Before − After</b>. A positive value means the participant's average reaction time decreased after exercise.</div>
+<div style="margin-top:20px">
+<div class="panel-title"><h3>🧪 Experimental question</h3></div>
+<p class="muted" style="line-height:1.7;margin-bottom:0"><b style="color:white">Hypothesis:</b> After exercise, participants may show a change in reaction time because physical activity can alter alertness and physiological arousal.</p>
+</div>
+</section>
 
+<section class="panel full">
+<div class="panel-title">
+<h3>👥 Participant Data</h3>
+<span id="dataCount" class="muted">0 records</span>
+</div>
+<div id="tableArea" class="empty">No participants yet. Add a participant or load the example dataset.</div>
+</section>
+
+<section class="panel full">
+<div class="panel-title">
+<h3>🌌 Reaction Time Observatory</h3>
+<span id="graphParticipantLabel" class="muted">No participant selected</span>
+</div>
+<div class="legend">
+<span><i class="dot before"></i> Before Exercise</span>
+<span><i class="dot after"></i> After Exercise</span>
+</div>
+<div class="chart-box"><canvas id="chart"></canvas></div>
+</section>
+</div>
+
+<div class="footer">Human Reaction Lab • Built for interactive science-exhibition data collection • Your data stays locally in this browser</div>
+</div>
+<div id="toast" class="toast"></div>
 
 <script>
-
+const STORAGE_KEY = 'humanReactionLabData_v1';
+let participants = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+let mode = localStorage.getItem('reactionLabMode') || '';
+let selectedParticipantId = participants.length ? participants[participants.length - 1].id : null;
+// Initialization on page load
 resetForm();
 render();
 
-/*
-   Always show the display-mode selection dialog
-   when the page loads.
-*/
-const modeModal = $("modeModal");
-
-if (modeModal) {
-    modeModal.classList.remove("hidden");
-    modeModal.style.display = "grid";
-}
-
-/*
-   Keep the previously selected mode available,
-   but do NOT automatically hide the dialog.
-*/
+// Check if mode was already chosen in a previous session
 if (mode) {
-    document.body.dataset.mode = mode;
+const modal = $('modeModal');
+if (modal) {
+modal.classList.add('hidden');
+modal.style.display = 'none';
+}
+document.body.dataset.mode = mode;
+}
+function $(id){return document.getElementById(id)}
+function save(){localStorage.setItem(STORAGE_KEY, JSON.stringify(participants))}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._toast);window._toast=setTimeout(()=>t.classList.remove('show'),2300)}
+// Updated setMode function
+function setMode(m) {
+mode = m;
+localStorage.setItem('reactionLabMode', m);
+
+// Hide the modal dialog completely
+const modal = $('modeModal');
+if (modal) {
+modal.classList.add('hidden');
+modal.style.display = 'none'; // Ensures the modal disappears across all screen sizes
 }
 
-
-/* =========================================================
-   RESIZE
-========================================================= */
-
-window.addEventListener(
-    "resize",
-    drawChart
-);
-<script>
-/* =========================================================
-   STORAGE
-========================================================= */
-
-const STORAGE_KEY =
-    "humanReactionLabData_v1";
-
-let participants =
-    JSON.parse(
-        localStorage.getItem(STORAGE_KEY) || "[]"
-    );
-
-let mode =
-    localStorage.getItem("reactionLabMode") || "";
-
-let selectedParticipantId =
-    participants.length
-        ? participants[participants.length - 1].id
-        : null;
-
-
-/* =========================================================
-   BASIC HELPERS
-========================================================= */
-
-function $(id) {
-    return document.getElementById(id);
+document.body.dataset.mode = m;
+toast(m === 'desktop' ? 'Desktop mode selected' : 'Mobile mode selected');
 }
 
-
-function save() {
-
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(participants)
-    );
-
-}
-
-
-function toast(message) {
-
-    const t = $("toast");
-
-    t.textContent = message;
-
-    t.classList.add("show");
-
-    clearTimeout(window._toast);
-
-    window._toast =
-        setTimeout(
-            () => t.classList.remove("show"),
-            2300
-        );
-
-}
-
-
-function num(value) {
-
-    const n = parseFloat(value);
-
-    return Number.isFinite(n) && n >= 0
-        ? n
-        : null;
-
-}
-
-
-function average(array) {
-
-    return array.reduce(
-        (a,b) => a + b,
-        0
-    ) / array.length;
-
-}
-
-
-/* =========================================================
-   SMOOTH SCROLL NAVIGATION
-========================================================= */
-
-function scrollToSection(id) {
-
-    const section = $(id);
-
-    if (!section) return;
-
-    section.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-
-}
-
-
-/* =========================================================
-   DISPLAY MODE
-========================================================= */
-
-function setMode(newMode) {
-
-    mode = newMode;
-
-    localStorage.setItem(
-        "reactionLabMode",
-        newMode
-    );
-
-    const modal = $("modeModal");
-
-    if (modal) {
-
-        modal.classList.add("hidden");
-
-        modal.style.display = "none";
-
-    }
-
-    document.body.dataset.mode =
-        newMode;
-
-    toast(
-        newMode === "desktop"
-            ? "Desktop mode selected"
-            : "Mobile mode selected"
-    );
-
-}
-
-
+// Updated showMode function for the top bar "⚙️ Display" button
 function showMode() {
-
-    const modal = $("modeModal");
-
-    if (!modal) return;
-
-    modal.classList.remove("hidden");
-
-    modal.style.display = "grid";
-
+const modal = $('modeModal');
+if (modal) {
+modal.classList.remove('hidden');
+modal.style.display = 'grid'; // Re-opens the modal dialog
 }
-
-
-/* =========================================================
-   INPUT MANAGEMENT
-========================================================= */
-
-function valuesFrom(type) {
-
-    return [
-        ...document.querySelectorAll(
-            "#" + type + "Inputs input"
-        )
-    ]
-    .map(input => num(input.value))
-    .filter(value => value !== null);
-
 }
-
-
-function addInput(type, value = "") {
-
-    const wrap =
-        $(type + "Inputs");
-
-    const row =
-        document.createElement("div");
-
-    row.className = "data-row";
-
-    row.innerHTML = `
-
-        <div>
-
-            <input
-                type="number"
-                min="0"
-                step="0.1"
-                placeholder="e.g. 245"
-                value="${value}"
-            >
-
-        </div>
-
-        <div
-            class="muted"
-            style="padding-bottom:12px"
-        >
-            milliseconds
-        </div>
-
-        <div></div>
-
-        <div class="row-actions">
-
-            <button
-                class="mini"
-                type="button"
-                onclick="
-                    this.closest('.data-row').remove();
-                "
-            >
-                ✕
-            </button>
-
-        </div>
-    `;
-
-    wrap.appendChild(row);
-
+function num(v){const n=parseFloat(v);return Number.isFinite(n)&&n>=0?n:null}
+function average(arr){return arr.reduce((a,b)=>a+b,0)/arr.length}
+function valuesFrom(type){
+return [...document.querySelectorAll('#'+type+'Inputs input')].map(x=>num(x.value)).filter(v=>v!==null)
 }
-
-
-/* =========================================================
-   RESET FORM
-========================================================= */
-
-function resetForm() {
-
-    $("participantName").value = "";
-
-    $("beforeInputs").innerHTML = "";
-
-    $("afterInputs").innerHTML = "";
-
-    addInput("before");
-
-    addInput("after");
-
+function addInput(type,value=''){
+const wrap=$(type+'Inputs');
+const row=document.createElement('div'); row.className='data-row';
+row.innerHTML=`<div><input type="number" min="0" step="0.1" placeholder="e.g. 245" value="${value}"></div><div class="muted" style="padding-bottom:12px">milliseconds</div><div></div><div class="row-actions"><button class="mini" onclick="this.closest('.data-row').remove(); updateInputButtons()">✕</button></div>`;
+wrap.appendChild(row); updateInputButtons();
 }
-
-
-/* =========================================================
-   ADD PARTICIPANT
-========================================================= */
-
-function addParticipant() {
-
-    const name =
-        $("participantName").value.trim()
-        ||
-        `Participant ${
-            String(
-                participants.length + 1
-            ).padStart(2,"0")
-        }`;
-
-    const before =
-        valuesFrom("before");
-
-    const after =
-        valuesFrom("after");
-
-
-    if (
-        !before.length ||
-        !after.length
-    ) {
-
-        toast(
-            "Please enter at least one valid trial for both sections."
-        );
-
-        return;
-
-    }
-
-
-    const b =
-        average(before);
-
-    const a =
-        average(after);
-
-
-    const participant = {
-
-        id:
-            Date.now() +
-            Math.random(),
-
-        name,
-
-        before: b,
-
-        after: a,
-
-        beforeTrials: before,
-
-        afterTrials: after
-
-    };
-
-
-    participants.push(
-        participant
-    );
-
-    selectedParticipantId =
-        participant.id;
-
-    save();
-
-    render();
-
-    resetForm();
-
-    toast(
-        `${name} added successfully ⚡`
-    );
-
+function updateInputButtons(){}
+function resetForm(){
+$('participantName').value='';
+$('beforeInputs').innerHTML=''; $('afterInputs').innerHTML='';
+addInput('before');addInput('after'); $('participantName').focus();
 }
-
-
-/* =========================================================
-   EXAMPLE DATA
-========================================================= */
-
-function loadExample() {
-
-    participants = [
-
-        {
-            id: 1,
-            name: "Aarav",
-
-            before: 318,
-            after: 286,
-
-            beforeTrials: [
-                320,
-                315,
-                319
-            ],
-
-            afterTrials: [
-                284,
-                289,
-                285
-            ]
-        },
-
-        {
-            id: 2,
-            name: "Diya",
-
-            before: 274,
-            after: 251,
-
-            beforeTrials: [
-                278,
-                270,
-                274
-            ],
-
-            afterTrials: [
-                249,
-                254,
-                250
-            ]
-        },
-
-        {
-            id: 3,
-            name: "Kabir",
-
-            before: 342,
-            after: 329,
-
-            beforeTrials: [
-                350,
-                338,
-                338
-            ],
-
-            afterTrials: [
-                325,
-                330,
-                332
-            ]
-        },
-
-        {
-            id: 4,
-            name: "Meera",
-
-            before: 295,
-            after: 307,
-
-            beforeTrials: [
-                290,
-                298,
-                297
-            ],
-
-            afterTrials: [
-                304,
-                309,
-                308
-            ]
-        },
-
-        {
-            id: 5,
-            name: "Rohan",
-
-            before: 261,
-            after: 239,
-
-            beforeTrials: [
-                258,
-                264,
-                261
-            ],
-
-            afterTrials: [
-                237,
-                241,
-                239
-            ]
-        },
-
-        {
-            id: 6,
-            name: "Tara",
-
-            before: 386,
-            after: 351,
-
-            beforeTrials: [
-                390,
-                381,
-                387
-            ],
-
-            afterTrials: [
-                347,
-                352,
-                354
-            ]
-        }
-
-    ];
-
-
-    selectedParticipantId =
-        participants.length
-            ? participants[
-                participants.length - 1
-            ].id
-            : null;
-
-
-    save();
-
-    render();
-
-    toast(
-        "Example dataset loaded ✨"
-    );
-
+function addParticipant(){
+const name=$('participantName').value.trim() || `Participant ${String(participants.length+1).padStart(2,'0')}`;
+const before=valuesFrom('before'), after=valuesFrom('after');
+if(!before.length || !after.length){toast('Please enter at least one valid trial for both sections.');return}
+const b=average(before), a=average(after);
+participants.push({id:Date.now()+Math.random(),name,before:b,after:a,beforeTrials:before,afterTrials:after});
+save(); render(); resetForm(); toast(`${name} added successfully ⚡`);
 }
-
-
-/* =========================================================
-   DELETE
-========================================================= */
-
-function deleteParticipant(id) {
-
-    participants =
-        participants.filter(
-            p => p.id !== id
-        );
-
-
-    if (
-        selectedParticipantId === id
-    ) {
-
-        selectedParticipantId =
-            participants.length
-                ? participants[
-                    participants.length - 1
-                ].id
-                : null;
-
-    }
-
-
-    save();
-
-    render();
-
-    toast(
-        "Participant deleted"
-    );
-
-}
-
-
-/* =========================================================
-   CLEAR ALL
-========================================================= */
-
-function clearAll() {
-
-    if (!participants.length) {
-
-        toast(
-            "There is no data to clear."
-        );
-
-        return;
-
-    }
-
-
-    if (
-        confirm(
-            "Delete all participant data? This cannot be undone."
-        )
-    ) {
-
-        participants = [];
-
-        selectedParticipantId = null;
-
-        save();
-
-        render();
-
-        toast(
-            "All participant data cleared"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   CSV EXPORT
-========================================================= */
-
-function exportCSV() {
-
-    if (!participants.length) {
-
-        toast(
-            "Add some participant data first."
-        );
-
-        return;
-
-    }
-
-
-    const rows = [
-
-        [
-            "Participant Name",
-            "Before Exercise (ms)",
-            "After Exercise (ms)",
-            "Change (Before - After) (ms)"
-        ],
-
-        ...participants.map(
-            p => [
-                p.name,
-                p.before.toFixed(2),
-                p.after.toFixed(2),
-                (p.before - p.after).toFixed(2)
-            ]
-        )
-
-    ];
-
-
-    const csv =
-        rows
-            .map(
-                row =>
-                    row
-                        .map(
-                            value =>
-                                `"${String(value)
-                                    .replaceAll('"','""')}"`
-                        )
-                        .join(",")
-            )
-            .join("\n");
-
-
-    const blob =
-        new Blob(
-            [csv],
-            {
-                type:
-                    "text/csv;charset=utf-8"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(blob);
-
-    const a =
-        document.createElement("a");
-
-    a.href = url;
-
-    a.download =
-        "human_reaction_lab_data.csv";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    URL.revokeObjectURL(url);
-
-    toast(
-        "CSV exported ⬇️"
-    );
-
-}
-
-
-/* =========================================================
-   DOWNLOAD GRAPH
-========================================================= */
-
-function downloadGraph() {
-
-    const canvas =
-        $("chart");
-
-    if (!canvas) return;
-
-    const a =
-        document.createElement("a");
-
-    a.download =
-        "human_reaction_lab_graph.png";
-
-    a.href =
-        canvas.toDataURL(
-            "image/png",
-            1
-        );
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    toast(
-        "Graph downloaded 🖼️"
-    );
-
-}
-
-
-/* =========================================================
-   SELECT PARTICIPANT
-========================================================= */
-
-function selectParticipant(id) {
-
-    selectedParticipantId = id;
-
-    render();
-
-    scrollToSection(
-        "graphSection"
-    );
-
-    toast(
-        "Showing this participant's graph 📊"
-    );
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(value) {
-
-    return String(value).replace(
-        /[&<>"']/g,
-
-        character => ({
-
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#039;"
-
-        }[character])
-
-    );
-
-}
-
-
-/* =========================================================
-   RENDER
-========================================================= */
-
-function render() {
-
-    $("totalParticipants").textContent =
-        participants.length;
-
-
-    $("dataCount").textContent =
-        participants.length +
-        " record" +
-        (
-            participants.length === 1
-                ? ""
-                : "s"
-        );
-
-
-    if (!participants.length) {
-
-        $("overallBefore").textContent =
-            "—";
-
-        $("overallAfter").textContent =
-            "—";
-
-
-        $("tableArea").innerHTML = `
-
-            <div class="empty">
-
-                No participants yet.
-                Add a participant or load
-                the example dataset.
-
-            </div>
-        `;
-
-    }
-
-    else {
-
-        const ob =
-            average(
-                participants.map(
-                    p => p.before
-                )
-            );
-
-        const oa =
-            average(
-                participants.map(
-                    p => p.after
-                )
-            );
-
-
-        $("overallBefore").textContent =
-            ob.toFixed(1) + " ms";
-
-        $("overallAfter").textContent =
-            oa.toFixed(1) + " ms";
-
-
-        $("tableArea").innerHTML = `
-
-            <div class="table-wrap">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Participant Name
-                            </th>
-
-                            <th>
-                                Before Exercise
-                            </th>
-
-                            <th>
-                                After Exercise
-                            </th>
-
-                            <th>
-                                Change
-                            </th>
-
-                            <th>
-                                Interpretation
-                            </th>
-
-                            <th>
-                                Actions
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        ${
-                            participants
-                                .map(p => {
-
-                                    const change =
-                                        p.before -
-                                        p.after;
-
-
-                                    const cls =
-                                        change > 0
-                                            ? "faster"
-                                            : change < 0
-                                                ? "slower"
-                                                : "same";
-
-
-                                    const text =
-                                        change > 0
-                                            ? "Faster after"
-                                            : change < 0
-                                                ? "Slower after"
-                                                : "No change";
-
-
-                                    return `
-
-                                        <tr>
-
-                                            <td>
-                                                ${escapeHTML(p.name)}
-                                            </td>
-
-                                            <td
-                                                class="before-text"
-                                            >
-                                                ${p.before.toFixed(1)}
-                                                ms
-                                            </td>
-
-                                            <td
-                                                class="after-text"
-                                            >
-                                                ${p.after.toFixed(1)}
-                                                ms
-                                            </td>
-
-                                            <td>
-
-                                                ${
-                                                    change > 0
-                                                        ? "+"
-                                                        : ""
-                                                }${change.toFixed(1)}
-                                                ms
-
-                                            </td>
-
-                                            <td>
-
-                                                <span
-                                                    class="pill ${cls}"
-                                                >
-                                                    ${text}
-                                                </span>
-
-                                            </td>
-
-                                            <td
-                                                style="
-                                                    white-space:nowrap;
-                                                "
-                                            >
-
-                                                <button
-                                                    class="mini"
-                                                    onclick="
-                                                        selectParticipant(${p.id})
-                                                    "
-                                                >
-                                                    View Graph
-                                                </button>
-
-                                                <button
-                                                    class="mini"
-                                                    onclick="
-                                                        deleteParticipant(${p.id})
-                                                    "
-                                                >
-                                                    Delete
-                                                </button>
-
-                                            </td>
-
-                                        </tr>
-
-                                    `;
-
-                                })
-                                .join("")
-                        }
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        `;
-
-    }
-
-
-    drawChart();
-
-}
-
-
-/* =========================================================
-   DRAW CHART
-========================================================= */
-
-function drawChart() {
-
-    const canvas =
-        $("chart");
-
-    const box =
-        canvas.parentElement;
-
-    const dpr =
-        window.devicePixelRatio || 1;
-
-
-    const w =
-        box.clientWidth;
-
-    const h =
-        box.clientHeight;
-
-
-    if (!w || !h) return;
-
-
-    canvas.width =
-        w * dpr;
-
-    canvas.height =
-        h * dpr;
-
-
-    canvas.style.width =
-        w + "px";
-
-    canvas.style.height =
-        h + "px";
-
-
-    const ctx =
-        canvas.getContext("2d");
-
-
-    ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
-
-
-    ctx.clearRect(
-        0,
-        0,
-        w,
-        h
-    );
-
-
-    const selected =
-        participants.find(
-            p =>
-                p.id ===
-                selectedParticipantId
-        );
-
-
-    const label =
-        $("graphParticipantLabel");
-
-
-    const pad = {
-
-        l: 72,
-        r: 35,
-        t: 70,
-        b: 75
-
-    };
-
-
-    const cw =
-        w -
-        pad.l -
-        pad.r;
-
-
-    const ch =
-        h -
-        pad.t -
-        pad.b;
-
-
-    const grad =
-        ctx.createLinearGradient(
-            0,
-            0,
-            0,
-            h
-        );
-
-
-    grad.addColorStop(
-        0,
-        "rgba(18,39,62,.72)"
-    );
-
-    grad.addColorStop(
-        1,
-        "rgba(5,15,27,.82)"
-    );
-
-
-    ctx.fillStyle = grad;
-
-    ctx.fillRect(
-        0,
-        0,
-        w,
-        h
-    );
-
-
-    if (!selected) {
-
-        label.textContent =
-            "No participant selected";
-
-
-        ctx.fillStyle =
-            "#7e91a7";
-
-        ctx.font =
-            "600 15px Inter";
-
-        ctx.textAlign =
-            "center";
-
-
-        ctx.fillText(
-            "Add a participant to reveal the observatory graph.",
-            w / 2,
-            h / 2
-        );
-
-
-        return;
-
-    }
-
-
-    label.textContent =
-        "Currently showing: " +
-        selected.name;
-
-
-    const beforeTrials =
-        selected.beforeTrials ||
-        [selected.before];
-
-
-    const afterTrials =
-        selected.afterTrials ||
-        [selected.after];
-
-
-    const maxTrials =
-        Math.max(
-            beforeTrials.length,
-            afterTrials.length
-        );
-
-
-    const all = [
-        ...beforeTrials,
-        ...afterTrials
-    ];
-
-
-    let min =
-        Math.max(
-            0,
-            Math.floor(
-                Math.min(...all) - 30
-            )
-        );
-
-
-    let max =
-        Math.ceil(
-            Math.max(...all) + 30
-        );
-
-
-    if (
-        max - min < 80
-    ) {
-
-        max =
-            min + 80;
-
-    }
-
-
-    const y =
-        value =>
-            pad.t +
-            ch -
-            (
-                (value - min) /
-                (max - min)
-            ) *
-            ch;
-
-
-    const x =
-        index =>
-            maxTrials === 1
-                ? pad.l + cw / 2
-                : pad.l +
-                    (
-                        index /
-                        (maxTrials - 1)
-                    ) *
-                    cw;
-
-
-    /* =========================
-       CHART GRID
-    ========================= */
-
-    ctx.font =
-        "11px Inter";
-
-    ctx.textAlign =
-        "right";
-
-
-    for (
-        let i = 0;
-        i <= 5;
-        i++
-    ) {
-
-        const value =
-            min +
-            (
-                (max - min) *
-                i /
-                5
-            );
-
-
-        const yy =
-            y(value);
-
-
-        ctx.strokeStyle =
-            "rgba(255,255,255,.08)";
-
-        ctx.lineWidth = 1;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            pad.l,
-            yy
-        );
-
-        ctx.lineTo(
-            w - pad.r,
-            yy
-        );
-
-        ctx.stroke();
-
-
-        ctx.fillStyle =
-            "#8193a8";
-
-
-        ctx.fillText(
-            value.toFixed(0) + " ms",
-            pad.l - 10,
-            yy + 4
-        );
-
-    }
-
-
-    /* =========================
-       TRIAL LABELS
-    ========================= */
-
-    ctx.textAlign =
-        "center";
-
-    ctx.fillStyle =
-        "#8295aa";
-
-    ctx.font =
-        "700 10px Inter";
-
-
-    for (
-        let i = 0;
-        i < maxTrials;
-        i++
-    ) {
-
-        ctx.fillText(
-            "Trial " + (i + 1),
-            x(i),
-            h - pad.b + 28
-        );
-
-    }
-
-
-    /* =========================
-       CHART TITLE
-    ========================= */
-
-    ctx.textAlign =
-        "left";
-
-    ctx.fillStyle =
-        "#dfeaff";
-
-    ctx.font =
-        '700 15px "Space Grotesk"';
-
-
-    const title =
-        selected.name +
-        " — Trial-by-Trial Reaction Time";
-
-
-    ctx.fillText(
-        title,
-        pad.l,
-        pad.t - 40
-    );
-
-
-    ctx.font =
-        "700 12px Inter";
-
-
-    ctx.fillStyle =
-        "#19b5fe";
-
-
-    ctx.fillText(
-        "Before avg: " +
-        selected.before.toFixed(1) +
-        " ms",
-        pad.l,
-        pad.t - 18
-    );
-
-
-    ctx.fillStyle =
-        "#ff5c8a";
-
-
-    ctx.fillText(
-        "After avg: " +
-        selected.after.toFixed(1) +
-        " ms",
-        pad.l + 190,
-        pad.t - 18
-    );
-
-
-    /* =========================
-       DRAW DATA SERIES
-    ========================= */
-
-    function drawSeries(
-        values,
-        color
-    ) {
-
-        if (!values.length)
-            return;
-
-
-        ctx.strokeStyle =
-            color;
-
-        ctx.lineWidth = 4;
-
-        ctx.shadowColor =
-            color;
-
-        ctx.shadowBlur = 13;
-
-        ctx.lineCap =
-            "round";
-
-        ctx.lineJoin =
-            "round";
-
-
-        ctx.beginPath();
-
-
-        values.forEach(
-            (value,index) => {
-
-                if (index) {
-
-                    ctx.lineTo(
-                        x(index),
-                        y(value)
-                    );
-
-                }
-
-                else {
-
-                    ctx.moveTo(
-                        x(index),
-                        y(value)
-                    );
-
-                }
-
-            }
-        );
-
-
-        ctx.stroke();
-
-        ctx.shadowBlur = 0;
-
-
-        values.forEach(
-            (value,index) => {
-
-                ctx.fillStyle =
-                    "#07111f";
-
-                ctx.beginPath();
-
-                ctx.arc(
-                    x(index),
-                    y(value),
-                    9,
-                    0,
-                    Math.PI * 2
-                );
-
-                ctx.fill();
-
-
-                ctx.fillStyle =
-                    color;
-
-                ctx.beginPath();
-
-                ctx.arc(
-                    x(index),
-                    y(value),
-                    6,
-                    0,
-                    Math.PI * 2
-                );
-
-                ctx.fill();
-
-
-                ctx.fillStyle =
-                    "#eaf3ff";
-
-                ctx.font =
-                    "700 11px Inter";
-
-                ctx.textAlign =
-                    "center";
-
-
-                ctx.fillText(
-                    value.toFixed(1) +
-                    " ms",
-                    x(index),
-                    y(value) - 15
-                );
-
-            }
-        );
-
-    }
-
-
-    drawSeries(
-        beforeTrials,
-        "#19b5fe"
-    );
-
-
-    drawSeries(
-        afterTrials,
-        "#ff5c8a"
-    );
-
-
-    /* =========================
-       AVERAGE MARKERS
-    ========================= */
-
-    ctx.setLineDash([
-        6,
-        6
-    ]);
-
-    ctx.lineWidth = 2;
-
-
-    ctx.strokeStyle =
-        "rgba(25,181,254,.7)";
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        pad.l,
-        y(selected.before)
-    );
-
-    ctx.lineTo(
-        w - pad.r,
-        y(selected.before)
-    );
-
-    ctx.stroke();
-
-
-    ctx.strokeStyle =
-        "rgba(255,92,138,.7)";
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        pad.l,
-        y(selected.after)
-    );
-
-    ctx.lineTo(
-        w - pad.r,
-        y(selected.after)
-    );
-
-    ctx.stroke();
-
-
-    ctx.setLineDash([]);
-
-}
-
-
-/* =========================================================
-   ACTIVE NAVIGATION
-========================================================= */
-
-const navButtons =
-    document.querySelectorAll(
-        ".quick-nav button"
-    );
-
-
-const sections = [
-    $("experimentSection"),
-    $("dashboardSection"),
-    $("dataSection"),
-    $("graphSection")
+function loadExample(){
+participants=[
+{id:1,name:'Aarav',before:318,after:286,beforeTrials:[320,315,319],afterTrials:[284,289,285]},
+{id:2,name:'Diya',before:274,after:251,beforeTrials:[278,270,274],afterTrials:[249,254,250]},
+{id:3,name:'Kabir',before:342,after:329,beforeTrials:[350,338,338],afterTrials:[325,330,332]},
+{id:4,name:'Meera',before:295,after:307,beforeTrials:[290,298,297],afterTrials:[304,309,308]},
+{id:5,name:'Rohan',before:261,after:239,beforeTrials:[258,264,261],afterTrials:[237,241,239]},
+{id:6,name:'Tara',before:386,after:351,beforeTrials:[390,381,387],afterTrials:[347,352,354]}
 ];
-
-
-const observer =
-    new IntersectionObserver(
-        entries => {
-
-            entries.forEach(
-                entry => {
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-                        navButtons.forEach(
-                            button =>
-                                button.classList.remove(
-                                    "active"
-                                )
-                        );
-
-
-                        const index =
-                            sections.indexOf(
-                                entry.target
-                            );
-
-
-                        if (
-                            index >= 0 &&
-                            navButtons[index]
-                        ) {
-
-                            navButtons[index]
-                                .classList.add(
-                                    "active"
-                                );
-
-                        }
-
-                    }
-
-                }
-            );
-
-        },
-        {
-            threshold: .35
-        }
-    );
-
-
-sections.forEach(
-    section => {
-
-        if (section)
-            observer.observe(section);
-
-    }
-);
-
-
-/* =========================================================
-   WINDOW RESIZE
-========================================================= */
-
-window.addEventListener(
-    "resize",
-    drawChart
-);
-
-
-/* =========================================================
-   INITIALIZATION
-========================================================= */
-
-resetForm();
-
+selectedParticipantId=participants.length ? participants[participants.length-1].id : null;
+save();render();toast('Example dataset loaded ✨');
+}
+function deleteParticipant(id){
+participants=participants.filter(p=>p.id!==id);
+if(selectedParticipantId===id) selectedParticipantId=participants.length ? participants[participants.length-1].id : null;
+save();render();toast('Participant deleted')
+}
+function clearAll(){
+if(!participants.length){toast('There is no data to clear.');return}
+if(confirm('Delete all participant data? This cannot be undone.')){participants=[];selectedParticipantId=null;save();render();toast('All participant data cleared')}
+}
+function exportCSV(){
+if(!participants.length){toast('Add some participant data first.');return}
+const rows=[['Participant Name','Before Exercise (ms)','After Exercise (ms)','Change (Before - After) (ms)'],
+...participants.map(p=>[p.name,p.before.toFixed(2),p.after.toFixed(2),(p.before-p.after).toFixed(2)])];
+const csv=rows.map(r=>r.map(x=>`"${String(x).replaceAll('"','""')}"`).join(',')).join('\\n');
+const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='human_reaction_lab_data.csv';a.click();URL.revokeObjectURL(a.href);
+toast('CSV exported ⬇️');
+}
+function downloadGraph(){
+const c=$('chart');const a=document.createElement('a');a.download='human_reaction_lab_graph.png';a.href=c.toDataURL('image/png',1);a.click();toast('Graph downloaded 🖼️');
+}
+function selectParticipant(id){
+selectedParticipantId=id;
 render();
-
-
-if (mode) {
-
-    const modal =
-        $("modeModal");
-
-    if (modal) {
-
-        modal.classList.add(
-            "hidden"
-        );
-
-        modal.style.display =
-            "none";
-
-    }
-
-    document.body.dataset.mode =
-        mode;
-
+document.querySelector('.chart-box')?.scrollIntoView({behavior:'smooth',block:'center'});
+toast('Showing this participant’s graph 📊');
 }
-else {
+function render(){
+$('totalParticipants').textContent=participants.length;
+$('dataCount').textContent=participants.length+' record'+(participants.length===1?'':'s');
+if(!participants.length){
+$('overallBefore').textContent='—';$('overallAfter').textContent='—';
+$('tableArea').innerHTML='<div class="empty">No participants yet. Add a participant or load the example dataset.</div>';
+}else{
+const ob=average(participants.map(p=>p.before)),oa=average(participants.map(p=>p.after));
+$('overallBefore').textContent=ob.toFixed(1)+' ms';$('overallAfter').textContent=oa.toFixed(1)+' ms';
+$('tableArea').innerHTML=`<div class="table-wrap"><table><thead><tr><th>Participant Name</th><th>Before Exercise</th><th>After Exercise</th><th>Change</th><th>Interpretation</th><th></th></tr></thead><tbody>${
+participants.map(p=>{
+const ch=p.before-p.after, cls=ch>0?'faster':ch<0?'slower':'same', txt=ch>0?'Faster after':ch<0?'Slower after':'No change';
+return `<tr><td>${escapeHTML(p.name)}</td><td class="before-text">${p.before.toFixed(1)} ms</td><td class="after-text">${p.after.toFixed(1)} ms</td><td>${ch>0?'+':''}${ch.toFixed(1)} ms</td><td><span class="pill ${cls}">${txt}</span></td><td style="white-space:nowrap"><button class="mini" onclick="selectParticipant(${p.id})">View Graph</button> <button class="mini" onclick="deleteParticipant(${p.id})">Delete</button></td></tr>`
+}).join('')
+}</tbody></table></div>`;
+}
+drawChart();
+}
+function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({'&':'&','<':'<','>':'>','"':'"',"'":'''}[m]))}
 
-    const modal =
-        $("modeModal");
+function drawChart(){
+const canvas=$('chart'), box=canvas.parentElement, dpr=window.devicePixelRatio||1;
+const w=box.clientWidth,h=box.clientHeight;
+canvas.width=w*dpr;canvas.height=h*dpr;const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+ctx.clearRect(0,0,w,h);
 
-    if (modal) {
+const selected=participants.find(p=>p.id===selectedParticipantId);
+const label=$('graphParticipantLabel');
 
-        modal.style.display =
-            "grid";
+const pad={l:72,r:35,t:55,b:75}, cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;
+const grad=ctx.createLinearGradient(0,0,0,h);
+grad.addColorStop(0,'rgba(18,39,62,.72)');
+grad.addColorStop(1,'rgba(5,15,27,.82)');
+ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
 
-    }
-
+if(!selected){
+label.textContent='No participant selected';
+ctx.fillStyle='#7e91a7';ctx.font='600 15px Inter';ctx.textAlign='center';
+ctx.fillText('Add a participant to reveal the observatory graph.',w/2,h/2);
+return;
 }
 
+label.textContent='Currently showing: '+selected.name;
+
+const beforeTrials=selected.beforeTrials || [selected.before];
+const afterTrials=selected.afterTrials || [selected.after];
+const maxTrials=Math.max(beforeTrials.length,afterTrials.length);
+const all=[...beforeTrials,...afterTrials];
+let min=Math.max(0,Math.floor(Math.min(...all)-30));
+let max=Math.ceil(Math.max(...all)+30);
+if(max-min<80) max=min+80;
+
+const y=v=>pad.t+ch-(v-min)/(max-min)*ch;
+const x=i=>maxTrials===1 ? pad.l+cw/2 : pad.l+(i/(maxTrials-1))*cw;
+
+ctx.font='11px Inter';ctx.textAlign='right';
+for(let i=0;i<=5;i++){
+const val=min+(max-min)*i/5,yy=y(val);
+ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=1;
+ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(w-pad.r,yy);ctx.stroke();
+ctx.fillStyle='#8193a8';ctx.fillText(val.toFixed(0)+' ms',pad.l-10,yy+4);
+}
+
+ctx.textAlign='center';ctx.fillStyle='#8295aa';ctx.font='700 10px Inter';
+for(let i=0;i<maxTrials;i++) ctx.fillText('Trial '+(i+1),x(i),h-pad.b+28);
+
+function drawSeries(values,color){
+if(!values.length)return;
+ctx.strokeStyle=color;ctx.lineWidth=4;ctx.shadowColor=color;ctx.shadowBlur=13;
+ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();
+values.forEach((v,i)=>i?ctx.lineTo(x(i),y(v)):ctx.moveTo(x(i),y(v)));
+ctx.stroke();ctx.shadowBlur=0;
+
+values.forEach((v,i)=>{
+ctx.fillStyle='#07111f';ctx.beginPath();ctx.arc(x(i),y(v),9,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=color;ctx.beginPath();ctx.arc(x(i),y(v),6,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='#eaf3ff';ctx.font='700 11px Inter';ctx.textAlign='center';
+ctx.fillText(v.toFixed(1)+' ms',x(i),y(v)-15);
+});
+}
+
+drawSeries(beforeTrials,'#19b5fe');
+drawSeries(afterTrials,'#ff5c8a');
+
+```js
+// Chart header — responsive so the labels never overlap
+ctx.textAlign='left';
+ctx.fillStyle='#dfeaff';
+ctx.font='700 15px "Space Grotesk"';
+
+const titleY = pad.t - 25;
+const title = selected.name + ' — Trial-by-Trial Reaction Time';
+ctx.fillText(title, pad.l, titleY);
+
+ctx.font='700 12px Inter';
+
+// Place averages on a second line instead of using fixed horizontal positions
+const statsY = pad.t - 5;
+
+ctx.fillStyle='#19b5fe';
+ctx.fillText('Before avg: ' + selected.before.toFixed(1) + ' ms', pad.l, statsY);
+
+ctx.fillStyle='#ff5c8a';
+ctx.fillText('After avg: ' + selected.after.toFixed(1) + ' ms', pad.l + 190, statsY);
+```
+
+// Average markers
+const avgX=w-pad.r-8;
+ctx.setLineDash([6,6]);ctx.lineWidth=2;
+ctx.strokeStyle='rgba(25,181,254,.7)';ctx.beginPath();ctx.moveTo(pad.l,y(selected.before));ctx.lineTo(w-pad.r,y(selected.before));ctx.stroke();
+ctx.strokeStyle='rgba(255,92,138,.7)';ctx.beginPath();ctx.moveTo(pad.l,y(selected.after));ctx.lineTo(w-pad.r,y(selected.after));ctx.stroke();
+ctx.setLineDash([]);
+}
+window.addEventListener('resize',drawChart);
+resetForm();render();
+if(mode){$('modeModal').classList.add('hidden');document.body.dataset.mode=mode}
 </script>
-
 </body>
 </html>
