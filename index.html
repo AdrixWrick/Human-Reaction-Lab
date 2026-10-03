@@ -311,6 +311,35 @@ button {
     font-size: 13px;
 
     font-weight: 600;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    transition: .18s ease;
+}
+
+.member:hover {
+    background: rgba(255,255,255,.15);
+    transform: translateY(-2px);
+}
+
+.mentor-btn {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.06);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    margin-left: 6px;
+    transition: .18s ease;
+}
+
+.mentor-btn:hover {
+    background: rgba(255,255,255,.15);
+    transform: translateY(-2px);
 }
 
 /* =========================
@@ -1340,7 +1369,7 @@ canvas {
 
     <p class="mentor">
         <strong>Mentor Teacher:</strong>
-        Md. Arif
+        <button class="mentor-btn" onclick="contactPerson('Md. Arif', '918240703967')">Md. Arif</button>
     </p>
 
     <div class="team-grid">
@@ -1371,33 +1400,33 @@ canvas {
 
             <div class="members">
 
-                <span class="member">
+                <button class="member" onclick="contactPerson('Adrita Bandyopadhyay', '917595870640')">
                     Adrita Bandyopadhyay
-                </span>
+                </button>
 
-                <span class="member">
+                <button class="member" onclick="contactPerson('Anubhav Paul', '917439007407')">
                     Anubhav Paul
-                </span>
+                </button>
 
-                <span class="member">
+                <button class="member" onclick="contactPerson('Aayush Bachhar', '918961320741')">
                     Aayush Bachhar
-                </span>
+                </button>
 
-                <span class="member">
+                <button class="member" onclick="contactPerson('Ayush Kumar', '917480960973')">
                     Ayush Kumar
-                </span>
+                </button>
 
-                <span class="member">
+                <button class="member" onclick="contactPerson('Aman Ghosh', '919776154321')">
                     Aman Ghosh
-                </span>
+                </button>
 
-                <span class="member">
+                <button class="member" onclick="contactPerson('Asmita Mandal', '919434223210')">
                     Asmita Mandal
-                </span>
+                </button>
 
-                <span class="member">
+                <button class="member" onclick="contactPerson('Debosmita Maity', '918336955535')">
                     Debosmita Maity
-                </span>
+                </button>
 
             </div>
 
@@ -1857,6 +1886,15 @@ canvas {
 
 
 <script>
+/* =========================================================
+   CONTACT FUNCTION
+========================================================= */
+
+function contactPerson(name, phone) {
+    alert(`Contacting with ${name}`);
+    window.open(`https://wa.me/${phone}`, '_blank');
+}
+
 /* =========================================================
    STORAGE & STATE
 ========================================================= */
