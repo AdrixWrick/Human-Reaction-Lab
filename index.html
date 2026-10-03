@@ -1299,6 +1299,16 @@ canvas {
         grid-template-columns: 1fr;
     }
 }
+
+/* Visual-Motor embedded module */
+#visualMotorSection { scroll-margin-top: 120px; }
+@media (max-width: 900px) {
+    #visualMotorFrame { height: 980px !important; }
+}
+@media (max-width: 600px) {
+    #visualMotorFrame { height: 1120px !important; }
+}
+
 </style>
 </head>
 
@@ -1897,6 +1907,752 @@ canvas {
 
 </section>
 
+
+
+<!-- =========================
+     VISUAL-MOTOR FUNCTION
+     Integrated before Participant Data
+     ========================= -->
+<section class="panel full" id="visualMotorSection">
+    <div class="panel-title">
+        <h3>🧠 Visual-Motor Neural Pathway</h3>
+        <span class="muted">Interactive sensory-to-motor circuit</span>
+    </div>
+
+    <div style="
+        width:100%;
+        overflow:hidden;
+        border:1px solid var(--line);
+        border-radius:20px;
+        background:#07111f;
+    ">
+        <iframe
+            id="visualMotorFrame"
+            title="Visual-Motor Neural Pathway"
+            srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; class=&quot;h-full dark&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Visual-Motor Neural Pathway&lt;/title&gt;
+    &lt;!-- Tailwind CSS --&gt;
+    &lt;script src=&quot;https://cdn.tailwindcss.com&quot;&gt;&lt;/script&gt;
+    &lt;!-- Google Fonts --&gt;
+    &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
+    &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;!-- FontAwesome Icons --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css&quot;&gt;
+    
+    &lt;script&gt;
+        tailwind.config = {
+            darkMode: &#x27;class&#x27;,
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: [&#x27;Inter&#x27;, &#x27;sans-serif&#x27;],
+                        mono: [&#x27;JetBrains Mono&#x27;, &#x27;monospace&#x27;],
+                    },
+                    colors: {
+                        stage: {
+                            1: &#x27;#f43f5e&#x27;, // Retina
+                            2: &#x27;#f97316&#x27;, // Optic Nerve
+                            3: &#x27;#a855f7&#x27;, // Visual Cortex
+                            4: &#x27;#0284c7&#x27;, // Motor Cortex
+                            5: &#x27;#10b981&#x27;, // Spinal Cord
+                            6: &#x27;#eab308&#x27;, // Effector Hand
+                        }
+                    },
+                    animation: {
+                        &#x27;pulse-fast&#x27;: &#x27;pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite&#x27;,
+                        &#x27;flow&#x27;: &#x27;flow 1.5s linear infinite&#x27;,
+                    },
+                    keyframes: {
+                        flow: {
+                            &#x27;0%&#x27;: { strokeDashoffset: &#x27;24&#x27; },
+                            &#x27;100%&#x27;: { strokeDashoffset: &#x27;0&#x27; }
+                        }
+                    }
+                }
+            }
+        }
+    &lt;/script&gt;
+    &lt;style&gt;
+        /* Custom scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+
+        .glass-panel {
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .dark .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .light .glass-panel, html:not(.dark) .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .pathway-line {
+            stroke-dasharray: 6 6;
+            animation: flow 1s linear infinite;
+        }
+
+        .svg-card-hover {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .svg-card-hover:hover {
+            transform: translateY(-3px);
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body class=&quot;h-full flex flex-col font-sans bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 antialiased selection:bg-cyan-500 selection:text-white&quot;&gt;
+
+    &lt;!-- Top Header Navigation --&gt;
+    &lt;header class=&quot;glass-panel sticky top-0 z-40 border-b border-slate-200 dark:border-slate-800/80 px-4 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4&quot;&gt;
+        &lt;div class=&quot;flex items-center space-x-3&quot;&gt;
+            &lt;div class=&quot;p-2.5 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl text-white shadow-lg shadow-cyan-500/20&quot;&gt;
+                &lt;i class=&quot;fa-solid fa-network-wired text-xl&quot;&gt;&lt;/i&gt;
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;h1 class=&quot;font-extrabold text-base lg:text-lg tracking-tight text-slate-900 dark:text-white flex items-center gap-2&quot;&gt;
+                    Visual-Motor Neural Pathway
+                &lt;/h1&gt;
+                &lt;p class=&quot;text-xs text-slate-500 dark:text-slate-400&quot;&gt;Complete Sensory Perception to Effector Response Circuit&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Interactive Control Bar --&gt;
+        &lt;div class=&quot;flex items-center gap-2 lg:gap-3 flex-wrap&quot;&gt;
+            &lt;div class=&quot;flex items-center bg-slate-200/80 dark:bg-slate-900/90 p-1 rounded-xl border border-slate-300/60 dark:border-slate-800&quot;&gt;
+                &lt;button id=&quot;btn-prev&quot; onclick=&quot;changeStage(-1)&quot; title=&quot;Previous Stage&quot; class=&quot;p-2 lg:px-3 lg:py-1.5 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-1.5&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-backward-step&quot;&gt;&lt;/i&gt; &lt;span class=&quot;hidden sm:inline&quot;&gt;Prev&lt;/span&gt;
+                &lt;/button&gt;
+
+                &lt;button id=&quot;btn-play&quot; onclick=&quot;toggleAutoPlay()&quot; title=&quot;Auto Pulse Simulation&quot; class=&quot;px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-md shadow-cyan-500/20&quot;&gt;
+                    &lt;i id=&quot;play-icon&quot; class=&quot;fa-solid fa-play&quot;&gt;&lt;/i&gt; &lt;span id=&quot;play-text&quot; class=&quot;hidden sm:inline&quot;&gt;Auto Pulse&lt;/span&gt;
+                &lt;/button&gt;
+
+                &lt;button id=&quot;btn-next&quot; onclick=&quot;changeStage(1)&quot; title=&quot;Next Stage&quot; class=&quot;p-2 lg:px-3 lg:py-1.5 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-1.5&quot;&gt;
+                    &lt;span class=&quot;hidden sm:inline&quot;&gt;Next&lt;/span&gt; &lt;i class=&quot;fa-solid fa-forward-step&quot;&gt;&lt;/i&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&quot;h-6 w-px bg-slate-300 dark:bg-slate-800 hidden sm:block&quot;&gt;&lt;/div&gt;
+
+            &lt;div class=&quot;flex items-center gap-2 bg-slate-200/80 dark:bg-slate-900/90 border border-slate-300/60 dark:border-slate-800 px-3 py-1.5 rounded-xl&quot;&gt;
+                &lt;span class=&quot;text-xs font-medium text-slate-500 dark:text-slate-400&quot;&gt;Step:&lt;/span&gt;
+                &lt;span id=&quot;stage-indicator&quot; class=&quot;font-mono text-xs font-bold text-cyan-600 dark:text-cyan-400&quot;&gt;1 / 6&lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Theme Toggle Button --&gt;
+            &lt;button onclick=&quot;toggleTheme()&quot; class=&quot;p-2 rounded-xl bg-slate-200/80 dark:bg-slate-900/90 hover:bg-slate-300 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300/60 dark:border-slate-800 transition&quot; title=&quot;Toggle Theme&quot;&gt;
+                &lt;i id=&quot;theme-icon&quot; class=&quot;fa-solid fa-moon&quot;&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+
+    &lt;!-- Main Content Container --&gt;
+    &lt;main class=&quot;flex-1 max-w-7xl w-full mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start&quot;&gt;
+
+        &lt;!-- Left/Top: Interactive Pathway &amp; Circuit Diagram (7 Cols) --&gt;
+        &lt;section class=&quot;lg:col-span-7 flex flex-col gap-5&quot;&gt;
+
+            &lt;!-- Interactive Pathway Flow Section --&gt;
+            &lt;div class=&quot;glass-panel rounded-2xl p-5 border border-slate-200 dark:border-slate-800 relative overflow-hidden&quot;&gt;
+                &lt;div class=&quot;flex items-center justify-between mb-4&quot;&gt;
+                    &lt;h2 class=&quot;text-xs font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase flex items-center gap-2&quot;&gt;
+                        &lt;i class=&quot;fa-solid fa-diagram-project text-cyan-500&quot;&gt;&lt;/i&gt; Neural Signal Flow Map
+                    &lt;/h2&gt;
+                    &lt;span id=&quot;signal-badge&quot; class=&quot;px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-rose-500/10 text-rose-500 dark:text-rose-400 border border-rose-500/20&quot;&gt;
+                        Signal: Stage 1
+                    &lt;/span&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Pathway Nodes (Responsive Grid Layout) --&gt;
+                &lt;div class=&quot;grid grid-cols-2 md:grid-cols-3 gap-3 relative z-10&quot; id=&quot;pathway-grid&quot;&gt;
+                    &lt;!-- Cards dynamic generation handled by JS --&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Neural Connection Flow Line SVG --&gt;
+                &lt;div class=&quot;mt-5 pt-4 border-t border-slate-200 dark:border-slate-800/80&quot;&gt;
+                    &lt;div class=&quot;flex justify-between items-center text-xs text-slate-500 dark:text-slate-400 mb-2 font-mono&quot;&gt;
+                        &lt;span&gt;Transmission Sequence&lt;/span&gt;
+                        &lt;span id=&quot;speed-indicator&quot;&gt;Latency: ~120 - 150 ms total&lt;/span&gt;
+                    &lt;/div&gt;
+                    
+                    &lt;!-- Progress Bar for Pathway Propagation --&gt;
+                    &lt;div class=&quot;w-full bg-slate-200 dark:bg-slate-900 h-2 rounded-full overflow-hidden p-0.5 border border-slate-300/50 dark:border-slate-800&quot;&gt;
+                        &lt;div id=&quot;progress-bar&quot; class=&quot;h-full bg-gradient-to-r from-rose-500 via-purple-500 to-yellow-500 rounded-full w-1/6 transition-all duration-500&quot;&gt;&lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Stage Vector Clip Art Interactive Card --&gt;
+            &lt;div class=&quot;glass-panel rounded-2xl p-5 border border-slate-200 dark:border-slate-800 relative flex flex-col items-center justify-center min-h-[380px] bg-white/50 dark:bg-slate-950/40&quot;&gt;
+                
+                &lt;!-- Background Micro Pattern --&gt;
+                &lt;div class=&quot;absolute inset-0 bg-[radial-gradient(#94a3b8_1px,transparent_1px)] dark:bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:20px_20px] opacity-25 pointer-events-none rounded-2xl&quot;&gt;&lt;/div&gt;
+
+                &lt;!-- SVG Artwork Container --&gt;
+                &lt;div id=&quot;svg-art-display&quot; class=&quot;relative z-10 w-full max-w-md aspect-video flex items-center justify-center transition-all duration-300&quot;&gt;
+                    &lt;!-- Vector Clip Art dynamically injected --&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Floating Title Label over Image --&gt;
+                &lt;div class=&quot;absolute top-4 left-4 z-20&quot;&gt;
+                    &lt;span id=&quot;artwork-badge&quot; class=&quot;px-3 py-1 rounded-lg text-xs font-mono font-bold bg-slate-900/80 text-white backdrop-blur border border-slate-700 shadow-sm&quot;&gt;
+                        Vector Clip Art
+                    &lt;/span&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Stage Quick Description --&gt;
+                &lt;div class=&quot;mt-4 z-20 text-center max-w-md&quot;&gt;
+                    &lt;p id=&quot;artwork-caption&quot; class=&quot;text-xs text-slate-600 dark:text-slate-400 font-mono&quot;&gt;
+                        Phototransduction in retinal rods &amp; cones layer
+                    &lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+        &lt;/section&gt;
+
+        &lt;!-- Right: Educational Concept Breakdown Panel (5 Cols) --&gt;
+        &lt;section class=&quot;lg:col-span-5 flex flex-col gap-5&quot;&gt;
+
+            &lt;!-- Comprehensive Concept Card --&gt;
+            &lt;div class=&quot;glass-panel rounded-2xl p-6 border border-slate-200 dark:border-slate-800&quot;&gt;
+                &lt;div class=&quot;flex items-center justify-between mb-3&quot;&gt;
+                    &lt;span id=&quot;concept-stage-num&quot; class=&quot;px-2.5 py-1 rounded-md font-mono text-xs font-bold bg-rose-500/10 text-rose-500 dark:text-rose-400 border border-rose-500/20&quot;&gt;
+                        STAGE 01 OF 06
+                    &lt;/span&gt;
+                    &lt;span id=&quot;concept-category&quot; class=&quot;text-xs font-medium text-slate-500 dark:text-slate-400&quot;&gt;
+                        Sensory Input Layer
+                    &lt;/span&gt;
+                &lt;/div&gt;
+
+                &lt;h2 id=&quot;concept-title&quot; class=&quot;text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2&quot;&gt;
+                    Photoreceptors in Retina
+                &lt;/h2&gt;
+
+                &lt;p id=&quot;concept-subtitle&quot; class=&quot;text-xs font-mono text-cyan-600 dark:text-cyan-400 mb-4&quot;&gt;
+                    Retinal Layer &amp;bull; Rods &amp; Cones Cellular Activation
+                &lt;/p&gt;
+
+                &lt;div id=&quot;concept-summary&quot; class=&quot;text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6&quot;&gt;
+                    Light rays pass through the cornea and lens, striking photoreceptor cells (rods and cones) in the retina. Photons cause a chemical change in photopigments, triggering graded membrane potential shifts.
+                &lt;/div&gt;
+
+                &lt;!-- Anatomical Mechanisms List --&gt;
+                &lt;div class=&quot;space-y-3 mb-6&quot; id=&quot;concept-mechanisms&quot;&gt;
+                    &lt;!-- Populated dynamically by JS --&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Neurobiology Technical Properties --&gt;
+                &lt;div class=&quot;space-y-2 pt-4 border-t border-slate-200 dark:border-slate-800&quot;&gt;
+                    &lt;div class=&quot;flex justify-between items-center text-xs&quot;&gt;
+                        &lt;span class=&quot;text-slate-500 dark:text-slate-400&quot;&gt;Signal Mechanism:&lt;/span&gt;
+                        &lt;span id=&quot;prop-signal&quot; class=&quot;font-mono font-semibold text-slate-800 dark:text-slate-200&quot;&gt;Photochemical / Hyperpolarization&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;flex justify-between items-center text-xs&quot;&gt;
+                        &lt;span class=&quot;text-slate-500 dark:text-slate-400&quot;&gt;Primary Cell Type:&lt;/span&gt;
+                        &lt;span id=&quot;prop-cells&quot; class=&quot;font-mono font-semibold text-slate-800 dark:text-slate-200&quot;&gt;Rods, Cones, Ganglion Cells&lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;flex justify-between items-center text-xs&quot;&gt;
+                        &lt;span class=&quot;text-slate-500 dark:text-slate-400&quot;&gt;Destination:&lt;/span&gt;
+                        &lt;span id=&quot;prop-destination&quot; class=&quot;font-mono font-semibold text-cyan-600 dark:text-cyan-400&quot;&gt;Optic Nerve (CN II)&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Pathway Summary Card --&gt;
+            &lt;div class=&quot;glass-panel rounded-2xl p-5 border border-slate-200 dark:border-slate-800&quot;&gt;
+                &lt;h3 class=&quot;text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2&quot;&gt;
+                    &lt;i class=&quot;fa-solid fa-lightbulb text-amber-500&quot;&gt;&lt;/i&gt; Key Concept Takeaway
+                &lt;/h3&gt;
+                &lt;p id=&quot;takeaway-text&quot; class=&quot;text-xs text-slate-600 dark:text-slate-300 leading-relaxed&quot;&gt;
+                    Visual-motor integration requires seamless handoff between sensory input (Occipital Lobe) and motor execution (Frontal Lobe), descending through the spinal cord to trigger muscle fibers.
+                &lt;/p&gt;
+            &lt;/div&gt;
+
+        &lt;/section&gt;
+    &lt;/main&gt;
+
+    &lt;script&gt;
+        /* Concept Data for each Stage with Vector SVG Clip Art */
+        const STAGES = [
+            {
+                id: 1,
+                name: &quot;Photoreceptors&quot;,
+                location: &quot;Retina (Eye)&quot;,
+                category: &quot;Sensory Reception&quot;,
+                badgeClass: &quot;bg-rose-500/10 text-rose-500 dark:text-rose-400 border-rose-500/20&quot;,
+                icon: &quot;fa-eye&quot;,
+                color: &quot;#f43f5e&quot;,
+                subtitle: &quot;Retinal Phototransduction &amp; Sensory Encoding&quot;,
+                summary: &quot;Light photons enter the cornea and lens, projecting onto the retina. Special neuroepithelial photoreceptor cells convert light energy into electrochemical impulses.&quot;,
+                mechanisms: [
+                    { title: &quot;Rods &amp; Cones Activation&quot;, desc: &quot;Rods detect motion and low light; Cones process high-acuity color vision in the fovea.&quot; },
+                    { title: &quot;Phototransduction Cascade&quot;, desc: &quot;Photons alter rhodopsin, triggering cGMP breakdown and cell hyperpolarization.&quot; },
+                    { title: &quot;Retinal Ganglion Cells&quot;, desc: &quot;Graded potentials aggregate into action potentials transmitted by ganglion cell axons.&quot; }
+                ],
+                signalType: &quot;Photochemical / Graded Potential&quot;,
+                cellType: &quot;Rods, Cones &amp; Ganglion Cells&quot;,
+                destination: &quot;Optic Nerve (CN II)&quot;,
+                takeaway: &quot;The visual pathway begins by converting light wave photons into electrical neural signals right inside the retinal layers of the eye.&quot;,
+                caption: &quot;Phototransduction inside retinal rods and cones layer&quot;,
+                // SVG Clip Art 1: Photoreceptors &amp; Retinal Structure
+                svg: `
+                &lt;svg viewBox=&quot;0 0 500 300&quot; class=&quot;w-full h-full drop-shadow-md&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+                    &lt;!-- Eyeball Outer Shell --&gt;
+                    &lt;path d=&quot;M 60,150 C 60,70 170,40 270,40 C 370,40 430,90 430,150 C 430,210 370,260 270,260 C 170,260 60,230 60,150 Z&quot; fill=&quot;none&quot; stroke=&quot;#f43f5e&quot; stroke-width=&quot;4&quot; class=&quot;dark:opacity-90&quot;/&gt;
+                    &lt;path d=&quot;M 60,100 C 30,120 30,180 60,200&quot; stroke=&quot;#38bdf8&quot; stroke-width=&quot;6&quot; fill=&quot;none&quot;/&gt;
+                    
+                    &lt;!-- Lens --&gt;
+                    &lt;ellipse cx=&quot;110&quot; cy=&quot;150&quot; rx=&quot;10&quot; ry=&quot;40&quot; fill=&quot;#7dd3fc&quot; opacity=&quot;0.7&quot;/&gt;
+
+                    &lt;!-- Incoming Light Waves --&gt;
+                    &lt;path d=&quot;M 10,90 L 105,135&quot; stroke=&quot;#facc15&quot; stroke-width=&quot;2&quot; stroke-dasharray=&quot;4 3&quot; class=&quot;pathway-line&quot;/&gt;
+                    &lt;path d=&quot;M 10,150 L 105,150&quot; stroke=&quot;#facc15&quot; stroke-width=&quot;3&quot; stroke-dasharray=&quot;4 3&quot; class=&quot;pathway-line&quot;/&gt;
+                    &lt;path d=&quot;M 10,210 L 105,165&quot; stroke=&quot;#facc15&quot; stroke-width=&quot;2&quot; stroke-dasharray=&quot;4 3&quot; class=&quot;pathway-line&quot;/&gt;
+
+                    &lt;!-- Retina Neural Layer Back Wall --&gt;
+                    &lt;path d=&quot;M 270,44 C 360,44 420,90 420,150 C 420,210 360,256 270,256&quot; fill=&quot;none&quot; stroke=&quot;#fb7185&quot; stroke-width=&quot;10&quot;/&gt;
+
+                    &lt;!-- Photoreceptor Inset Diagram --&gt;
+                    &lt;g transform=&quot;translate(250, 80)&quot;&gt;
+                        &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;150&quot; height=&quot;130&quot; rx=&quot;12&quot; fill=&quot;#0f172a&quot; stroke=&quot;#f43f5e&quot; stroke-width=&quot;2&quot;/&gt;
+                        
+                        &lt;!-- Rods (Cylindrical) --&gt;
+                        &lt;rect x=&quot;20&quot; y=&quot;30&quot; width=&quot;8&quot; height=&quot;45&quot; rx=&quot;4&quot; fill=&quot;#e11d48&quot;/&gt;
+                        &lt;rect x=&quot;36&quot; y=&quot;30&quot; width=&quot;8&quot; height=&quot;45&quot; rx=&quot;4&quot; fill=&quot;#e11d48&quot;/&gt;
+                        &lt;rect x=&quot;84&quot; y=&quot;30&quot; width=&quot;8&quot; height=&quot;45&quot; rx=&quot;4&quot; fill=&quot;#e11d48&quot;/&gt;
+                        
+                        &lt;!-- Cones (Tapered) --&gt;
+                        &lt;polygon points=&quot;56,75 62,30 68,75&quot; fill=&quot;#f43f5e&quot;/&gt;
+                        &lt;polygon points=&quot;104,75 110,30 116,75&quot; fill=&quot;#fb7185&quot;/&gt;
+
+                        &lt;!-- Bipolar / Ganglion Neural Connections --&gt;
+                        &lt;path d=&quot;M 24,75 L 24,105 L 60,115&quot; stroke=&quot;#38bdf8&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot;/&gt;
+                        &lt;path d=&quot;M 62,75 L 62,105 L 60,115&quot; stroke=&quot;#38bdf8&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot;/&gt;
+                        &lt;circle cx=&quot;60&quot; cy=&quot;115&quot; r=&quot;4&quot; fill=&quot;#38bdf8&quot;/&gt;
+
+                        &lt;text x=&quot;75&quot; y=&quot;20&quot; text-anchor=&quot;middle&quot; fill=&quot;#fda4af&quot; font-size=&quot;10&quot; font-weight=&quot;bold&quot; font-family=&quot;sans-serif&quot;&gt;Rods &amp;amp; Cones Layer&lt;/text&gt;
+                    &lt;/g&gt;
+                &lt;/svg&gt;
+                `
+            },
+            {
+                id: 2,
+                name: &quot;Optic Nerve&quot;,
+                location: &quot;Cranial Nerve II&quot;,
+                category: &quot;Afferent Transmission&quot;,
+                badgeClass: &quot;bg-orange-500/10 text-orange-500 dark:text-orange-400 border-orange-500/20&quot;,
+                icon: &quot;fa-bolt&quot;,
+                color: &quot;#f97316&quot;,
+                subtitle: &quot;Action Potential Propagation &amp; Chiasm Decussation&quot;,
+                summary: &quot;Retinal ganglion cell axons converge at the optic disc to form the Optic Nerve (CN II), conducting action potentials through the optic chiasm to the thalamus (LGN).&quot;,
+                mechanisms: [
+                    { title: &quot;Axon Fiber Bundle&quot;, desc: &quot;Contains over 1 million myelinated fibers for high-velocity signal transmission.&quot; },
+                    { title: &quot;Optic Chiasm Crossing&quot;, desc: &quot;Nasal visual field fibers cross to opposite hemisphere for binocular depth vision.&quot; },
+                    { title: &quot;Thalamic Relay (LGN)&quot;, desc: &quot;Synapses in the lateral geniculate nucleus before radiating to the visual cortex.&quot; }
+                ],
+                signalType: &quot;Action Potentials (Saltatory)&quot;,
+                cellType: &quot;Myelinated Ganglion Axons&quot;,
+                destination: &quot;Occipital Visual Cortex&quot;,
+                takeaway: &quot;The optic nerve serves as a high-speed bio-electrical cable routing visual data from both eyes to the brain&#x27;s processing centers.&quot;,
+                caption: &quot;Myelinated axon fiber bundle in Cranial Nerve II&quot;,
+                // SVG Clip Art 2: Optic Nerve Cable
+                svg: `
+                &lt;svg viewBox=&quot;0 0 500 300&quot; class=&quot;w-full h-full drop-shadow-md&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+                    &lt;g transform=&quot;translate(30, 50)&quot;&gt;
+                        &lt;!-- Outer Nerve Sheath --&gt;
+                        &lt;path d=&quot;M 40,80 Q 200,30 380,80 C 430,95 430,165 380,180 Q 200,130 40,180 Z&quot; fill=&quot;#1e293b&quot; stroke=&quot;#ea580c&quot; stroke-width=&quot;3&quot;/&gt;
+                        
+                        &lt;!-- Internal Parallel Axon Streams --&gt;
+                        &lt;path d=&quot;M 50,100 Q 200,50 400,100&quot; stroke=&quot;#f97316&quot; stroke-width=&quot;4&quot; stroke-dasharray=&quot;8 4&quot; fill=&quot;none&quot; class=&quot;pathway-line&quot;/&gt;
+                        &lt;path d=&quot;M 50,130 Q 200,80 410,130&quot; stroke=&quot;#fb923c&quot; stroke-width=&quot;5&quot; stroke-dasharray=&quot;10 5&quot; fill=&quot;none&quot; class=&quot;pathway-line&quot;/&gt;
+                        &lt;path d=&quot;M 50,160 Q 200,110 390,160&quot; stroke=&quot;#fdba74&quot; stroke-width=&quot;4&quot; stroke-dasharray=&quot;6 3&quot; fill=&quot;none&quot; class=&quot;pathway-line&quot;/&gt;
+
+                        &lt;!-- Myelin Sheath Segments --&gt;
+                        &lt;rect x=&quot;120&quot; y=&quot;72&quot; width=&quot;20&quot; height=&quot;28&quot; rx=&quot;4&quot; fill=&quot;#f97316&quot; opacity=&quot;0.8&quot;/&gt;
+                        &lt;rect x=&quot;230&quot; y=&quot;78&quot; width=&quot;20&quot; height=&quot;28&quot; rx=&quot;4&quot; fill=&quot;#f97316&quot; opacity=&quot;0.8&quot;/&gt;
+                        &lt;rect x=&quot;320&quot; y=&quot;98&quot; width=&quot;20&quot; height=&quot;28&quot; rx=&quot;4&quot; fill=&quot;#f97316&quot; opacity=&quot;0.8&quot;/&gt;
+
+                        &lt;!-- Action Potential Electrical Pulse Circles --&gt;
+                        &lt;circle cx=&quot;130&quot; cy=&quot;86&quot; r=&quot;6&quot; fill=&quot;#fef08a&quot; class=&quot;animate-pulse&quot;/&gt;
+                        &lt;circle cx=&quot;240&quot; cy=&quot;92&quot; r=&quot;6&quot; fill=&quot;#fef08a&quot; class=&quot;animate-pulse&quot;/&gt;
+
+                        &lt;!-- Cross Section Cutout Detail --&gt;
+                        &lt;g transform=&quot;translate(300, 10)&quot;&gt;
+                            &lt;circle cx=&quot;50&quot; cy=&quot;50&quot; r=&quot;38&quot; fill=&quot;#0f172a&quot; stroke=&quot;#f97316&quot; stroke-width=&quot;3&quot;/&gt;
+                            &lt;circle cx=&quot;35&quot; cy=&quot;38&quot; r=&quot;7&quot; fill=&quot;#fb923c&quot;/&gt;
+                            &lt;circle cx=&quot;65&quot; cy=&quot;38&quot; r=&quot;9&quot; fill=&quot;#f97316&quot;/&gt;
+                            &lt;circle cx=&quot;45&quot; cy=&quot;65&quot; r=&quot;8&quot; fill=&quot;#fdba74&quot;/&gt;
+                            &lt;circle cx=&quot;68&quot; cy=&quot;62&quot; r=&quot;6&quot; fill=&quot;#ea580c&quot;/&gt;
+                            &lt;text x=&quot;50&quot; y=&quot;100&quot; text-anchor=&quot;middle&quot; fill=&quot;#fdba74&quot; font-size=&quot;9&quot; font-weight=&quot;bold&quot; font-family=&quot;sans-serif&quot;&gt;Axon Bundle Cross-Section&lt;/text&gt;
+                        &lt;/g&gt;
+                    &lt;/g&gt;
+                &lt;/svg&gt;
+                `
+            },
+            {
+                id: 3,
+                name: &quot;Visual Cortex&quot;,
+                location: &quot;Occipital Lobe (V1)&quot;,
+                category: &quot;Sensory Processing&quot;,
+                badgeClass: &quot;bg-purple-500/10 text-purple-500 dark:text-purple-400 border-purple-500/20&quot;,
+                icon: &quot;fa-brain&quot;,
+                color: &quot;#a855f7&quot;,
+                subtitle: &quot;Feature Extraction &amp; Spatial Mapping&quot;,
+                summary: &quot;Located in the posterior occipital lobe, the Primary Visual Cortex (V1) decodes contrast, edges, motion, orientation, and spatial orientation of the target visual object.&quot;,
+                mechanisms: [
+                    { title: &quot;Retinotopic Mapping&quot;, desc: &quot;Topographical cortical map preserving spatial relationships from the retina.&quot; },
+                    { title: &quot;Feature Detection&quot;, desc: &quot;Simple and complex cortical cells decode edge orientations and movement motion vectors.&quot; },
+                    { title: &quot;Dorsal Stream Output&quot;, desc: &quot;Projects spatial &#x27;where&#x27; info forward to parietal and frontal motor areas.&quot; }
+                ],
+                signalType: &quot;Cortical Synaptic Integration&quot;,
+                cellType: &quot;Pyramidal &amp; Stellate Neurons&quot;,
+                destination: &quot;Frontal Motor Cortex&quot;,
+                takeaway: &quot;The visual cortex transforms raw light impulses into a detailed spatial 3D model of what and where the object is.&quot;,
+                caption: &quot;Primary Visual Cortex (V1) in posterior Occipital Lobe&quot;,
+                // SVG Clip Art 3: Visual Cortex Brain Region
+                svg: `
+                &lt;svg viewBox=&quot;0 0 500 300&quot; class=&quot;w-full h-full drop-shadow-md&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+                    &lt;g transform=&quot;translate(50, 20)&quot;&gt;
+                        &lt;!-- Cerebrum Silhouette --&gt;
+                        &lt;path d=&quot;M 120,230 C 60,220 30,170 40,120 C 50,70 110,30 200,30 C 290,30 350,60 370,110 C 390,140 380,200 320,230 C 270,250 200,240 120,230 Z&quot; fill=&quot;#1e1b4b&quot; stroke=&quot;#7e22ce&quot; stroke-width=&quot;3&quot;/&gt;
+                        &lt;path d=&quot;M 280,230 C 320,230 350,250 330,280 C 300,290 260,270 250,240 Z&quot; fill=&quot;#2e1065&quot; stroke=&quot;#a855f7&quot; stroke-width=&quot;2&quot;/&gt;
+                        
+                        &lt;!-- Occipital Lobe Highlighted Zone (V1) --&gt;
+                        &lt;path d=&quot;M 320,110 C 370,130 370,190 320,230 C 290,210 290,140 320,110 Z&quot; fill=&quot;#a855f7&quot; opacity=&quot;0.65&quot; class=&quot;animate-pulse&quot;/&gt;
+                        
+                        &lt;!-- Cortical Folds / Gyri --&gt;
+                        &lt;path d=&quot;M 90,110 Q 140,90 180,120 T 260,100&quot; fill=&quot;none&quot; stroke=&quot;#6b21a8&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot;/&gt;
+                        &lt;path d=&quot;M 110,150 Q 170,140 220,170 T 300,150&quot; fill=&quot;none&quot; stroke=&quot;#6b21a8&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot;/&gt;
+
+                        &lt;!-- Signal Input Arrow into Occipital --&gt;
+                        &lt;path d=&quot;M 20,180 Q 180,180 320,165&quot; stroke=&quot;#c084fc&quot; stroke-width=&quot;4&quot; stroke-dasharray=&quot;6 4&quot; fill=&quot;none&quot; class=&quot;pathway-line&quot;/&gt;
+
+                        &lt;!-- Label Overlay --&gt;
+                        &lt;g transform=&quot;translate(260, 150)&quot;&gt;
+                            &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;120&quot; height=&quot;26&quot; rx=&quot;6&quot; fill=&quot;#0f172a&quot; stroke=&quot;#c084fc&quot; stroke-width=&quot;1.5&quot;/&gt;
+                            &lt;text x=&quot;60&quot; y=&quot;17&quot; text-anchor=&quot;middle&quot; fill=&quot;#e9d5ff&quot; font-size=&quot;10&quot; font-weight=&quot;bold&quot; font-family=&quot;sans-serif&quot;&gt;Occipital Lobe (V1)&lt;/text&gt;
+                        &lt;/g&gt;
+                    &lt;/g&gt;
+                &lt;/svg&gt;
+                `
+            },
+            {
+                id: 4,
+                name: &quot;Motor Cortex&quot;,
+                location: &quot;Frontal Lobe (M1)&quot;,
+                category: &quot;Motor Planning&quot;,
+                badgeClass: &quot;bg-sky-500/10 text-sky-500 dark:text-sky-400 border-sky-500/20&quot;,
+                icon: &quot;fa-gears&quot;,
+                color: &quot;#0284c7&quot;,
+                subtitle: &quot;Motor Planning &amp; Upper Motor Neuron Firing&quot;,
+                summary: &quot;Spatial visual data transfers to the Premotor Cortex and Primary Motor Cortex (M1) in the frontal lobe to plan motor trajectories and formulate muscle commands.&quot;,
+                mechanisms: [
+                    { title: &quot;Motor Program Formulation&quot;, desc: &quot;Translates visual target position into joint movement angles and velocity.&quot; },
+                    { title: &quot;Motor Homunculus&quot;, desc: &quot;Fine motor control of hand/fingers occupies a large surface of the precentral gyrus.&quot; },
+                    { title: &quot;Betz Pyramidal Cells&quot;, desc: &quot;Giant upper motor neurons discharge impulses down the corticospinal tract.&quot; }
+                ],
+                signalType: &quot;Efferent Command Potentials&quot;,
+                cellType: &quot;Betz Upper Motor Neurons&quot;,
+                destination: &quot;Spinal Cord (Ventral Horn)&quot;,
+                takeaway: &quot;The motor cortex acts as the command hub, transforming visual intention into deliberate motor instructions.&quot;,
+                caption: &quot;Primary Motor Cortex (M1) precentral gyrus in Frontal Lobe&quot;,
+                // SVG Clip Art 4: Motor Cortex Brain Region
+                svg: `
+                &lt;svg viewBox=&quot;0 0 500 300&quot; class=&quot;w-full h-full drop-shadow-md&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+                    &lt;g transform=&quot;translate(50, 20)&quot;&gt;
+                        &lt;!-- Cerebrum Silhouette --&gt;
+                        &lt;path d=&quot;M 120,230 C 60,220 30,170 40,120 C 50,70 110,30 200,30 C 290,30 350,60 370,110 C 390,140 380,200 320,230 C 270,250 200,240 120,230 Z&quot; fill=&quot;#0c4a6e&quot; stroke=&quot;#0284c7&quot; stroke-width=&quot;3&quot;/&gt;
+                        
+                        &lt;!-- Precentral Gyrus Motor Strip Highlight --&gt;
+                        &lt;path d=&quot;M 170,35 C 190,35 200,130 190,210 C 170,210 160,120 150,38 Z&quot; fill=&quot;#0284c7&quot; opacity=&quot;0.8&quot; class=&quot;animate-pulse&quot;/&gt;
+
+                        &lt;!-- Inter-cortical Association Pathway (V1 -&gt; M1) --&gt;
+                        &lt;path d=&quot;M 320,150 Q 250,70 180,100&quot; stroke=&quot;#38bdf8&quot; stroke-width=&quot;4&quot; stroke-dasharray=&quot;6 4&quot; fill=&quot;none&quot; class=&quot;pathway-line&quot;/&gt;
+
+                        &lt;!-- Descending Signal to Brainstem/Spinal Cord --&gt;
+                        &lt;path d=&quot;M 175,120 Q 185,200 210,280&quot; stroke=&quot;#7dd3fc&quot; stroke-width=&quot;5&quot; stroke-dasharray=&quot;8 4&quot; fill=&quot;none&quot; class=&quot;pathway-line&quot;/&gt;
+
+                        &lt;!-- Label Overlay --&gt;
+                        &lt;g transform=&quot;translate(90, 70)&quot;&gt;
+                            &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;130&quot; height=&quot;26&quot; rx=&quot;6&quot; fill=&quot;#0f172a&quot; stroke=&quot;#38bdf8&quot; stroke-width=&quot;1.5&quot;/&gt;
+                            &lt;text x=&quot;65&quot; y=&quot;17&quot; text-anchor=&quot;middle&quot; fill=&quot;#bae6fd&quot; font-size=&quot;10&quot; font-weight=&quot;bold&quot; font-family=&quot;sans-serif&quot;&gt;Motor Cortex (M1)&lt;/text&gt;
+                        &lt;/g&gt;
+                    &lt;/g&gt;
+                &lt;/svg&gt;
+                `
+            },
+            {
+                id: 5,
+                name: &quot;Spinal Cord&quot;,
+                location: &quot;Ventral Horn (C5-T1)&quot;,
+                category: &quot;Efferent Conduction&quot;,
+                badgeClass: &quot;bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border-emerald-500/20&quot;,
+                icon: &quot;fa-dna&quot;,
+                color: &quot;#10b981&quot;,
+                subtitle: &quot;Lateral Corticospinal Tract &amp; Alpha Motor Synapse&quot;,
+                summary: &quot;Descending signals travel through the lateral corticospinal tract into the spinal cord segment, synapsing onto Alpha Motor Neurons located in the ventral horn.&quot;,
+                mechanisms: [
+                    { title: &quot;Corticospinal Decussation&quot;, desc: &quot;Motor tracts cross in medullary pyramids, controlling contralateral hand muscles.&quot; },
+                    { title: &quot;Alpha Motor Synapse&quot;, desc: &quot;Upper motor neuron synapses with lower motor neurons in grey matter ventral horn.&quot; },
+                    { title: &quot;Ventral Root Exit&quot;, desc: &quot;Effector action potentials leave via spinal peripheral nerves toward arm muscles.&quot; }
+                ],
+                signalType: &quot;Synaptic Transmission (Glutamate)&quot;,
+                cellType: &quot;Alpha Lower Motor Neurons&quot;,
+                destination: &quot;Effector Hand Muscles&quot;,
+                takeaway: &quot;The spinal cord ventral horn functions as the crucial relay station connecting central brain commands to peripheral spinal nerves.&quot;,
+                caption: &quot;Spinal cord cross-section showing motor signal exit from Ventral Horn&quot;,
+                // SVG Clip Art 5: Spinal Cord Cross Section
+                svg: `
+                &lt;svg viewBox=&quot;0 0 500 300&quot; class=&quot;w-full h-full drop-shadow-md&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+                    &lt;g transform=&quot;translate(50, 30)&quot;&gt;
+                        &lt;!-- Spinal Cord White Matter Outline --&gt;
+                        &lt;path d=&quot;M 200,30 C 310,30 360,80 360,140 C 360,200 300,240 200,240 C 100,240 40,200 40,140 C 40,80 90,30 200,30 Z&quot; fill=&quot;#064e3b&quot; stroke=&quot;#10b981&quot; stroke-width=&quot;4&quot;/&gt;
+
+                        &lt;!-- Butterfly Grey Matter --&gt;
+                        &lt;path d=&quot;M 140,110 C 160,110 180,125 200,130 C 220,125 240,110 260,110 C 280,110 290,80 270,70 C 250,60 230,90 200,100 C 170,90 150,60 130,70 C 110,80 120,110 140,110 Z&quot; fill=&quot;#047857&quot;/&gt;
+                        &lt;!-- Ventral Horn Motor Output Wings --&gt;
+                        &lt;path d=&quot;M 140,140 C 160,140 180,135 200,140 C 220,135 240,140 260,140 C 280,140 290,190 260,195 C 230,200 220,160 200,150 C 180,160 170,200 140,195 C 110,190 120,140 140,140 Z&quot; fill=&quot;#10b981&quot; class=&quot;animate-pulse&quot;/&gt;
+
+                        &lt;!-- Ventral Root Motor Exit Nerve Lines --&gt;
+                        &lt;path d=&quot;M 140,185 Q 80,210 20,230&quot; stroke=&quot;#34d399&quot; stroke-width=&quot;5&quot; stroke-dasharray=&quot;6 3&quot; fill=&quot;none&quot; class=&quot;pathway-line&quot;/&gt;
+                        &lt;path d=&quot;M 260,185 Q 320,210 380,230&quot; stroke=&quot;#34d399&quot; stroke-width=&quot;5&quot; stroke-dasharray=&quot;6 3&quot; fill=&quot;none&quot; class=&quot;pathway-line&quot;/&gt;
+
+                        &lt;!-- Synapse Firing Glow --&gt;
+                        &lt;circle cx=&quot;140&quot; cy=&quot;180&quot; r=&quot;8&quot; fill=&quot;#a7f3d0&quot; class=&quot;animate-ping&quot;/&gt;
+
+                        &lt;!-- Label Overlay --&gt;
+                        &lt;g transform=&quot;translate(130, 20)&quot;&gt;
+                            &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;140&quot; height=&quot;24&quot; rx=&quot;6&quot; fill=&quot;#0f172a&quot; stroke=&quot;#34d399&quot; stroke-width=&quot;1.5&quot;/&gt;
+                            &lt;text x=&quot;70&quot; y=&quot;16&quot; text-anchor=&quot;middle&quot; fill=&quot;#a7f3d0&quot; font-size=&quot;10&quot; font-weight=&quot;bold&quot; font-family=&quot;sans-serif&quot;&gt;Ventral Horn (Motor)&lt;/text&gt;
+                        &lt;/g&gt;
+                    &lt;/g&gt;
+                &lt;/svg&gt;
+                `
+            },
+            {
+                id: 6,
+                name: &quot;Hand Muscles&quot;,
+                location: &quot;Neuromuscular Junction&quot;,
+                category: &quot;Mechanical Response&quot;,
+                badgeClass: &quot;bg-yellow-500/10 text-yellow-500 dark:text-yellow-400 border-yellow-500/20&quot;,
+                icon: &quot;fa-hand-fist&quot;,
+                color: &quot;#eab308&quot;,
+                subtitle: &quot;Acetylcholine Release &amp; Sarcomere Contraction&quot;,
+                summary: &quot;Motor nerve terminals release Acetylcholine across the neuromuscular junction, firing muscle action potentials that induce sliding filament action and rapid muscle contraction.&quot;,
+                mechanisms: [
+                    { title: &quot;Neuromuscular Synapse&quot;, desc: &quot;ACh binds to nicotinic receptors on the muscle motor endplate.&quot; },
+                    { title: &quot;Calcium Influx&quot;, desc: &quot;Action potential travels T-tubules, releasing Ca²⁺ from sarcoplasmic reticulum.&quot; },
+                    { title: &quot;Sliding Filament Action&quot;, desc: &quot;Myosin heads bind actin, shortening sarcomeres to contract fingers and hand.&quot; }
+                ],
+                signalType: &quot;Neuromuscular Transmission&quot;,
+                cellType: &quot;Skeletal Muscle Fibers (Myocytes)&quot;,
+                destination: &quot;Physical Action / Movement&quot;,
+                takeaway: &quot;The circuit completes as bio-electrical neural signals are converted into physical mechanical work by effector hand muscles.&quot;,
+                caption: &quot;Neuromuscular Junction excitation and hand flexor contraction&quot;,
+                // SVG Clip Art 6: Effector Hand &amp; Muscle
+                svg: `
+                &lt;svg viewBox=&quot;0 0 500 300&quot; class=&quot;w-full h-full drop-shadow-md&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+                    &lt;g transform=&quot;translate(80, 20)&quot;&gt;
+                        &lt;!-- Forearm Muscle Base --&gt;
+                        &lt;path d=&quot;M 60,250 L 120,150 L 160,160 L 100,260 Z&quot; fill=&quot;#854d0e&quot; stroke=&quot;#ca8a04&quot; stroke-width=&quot;2&quot;/&gt;
+                        &lt;path d=&quot;M 70,250 Q 120,180 140,160&quot; stroke=&quot;#facc15&quot; stroke-width=&quot;7&quot; stroke-linecap=&quot;round&quot; fill=&quot;none&quot; class=&quot;animate-pulse&quot;/&gt;
+
+                        &lt;!-- Hand Silhouette --&gt;
+                        &lt;path d=&quot;M 120,150 C 130,120 120,90 110,60 C 105,50 115,45 125,55 C 135,70 145,110 150,130 C 155,100 160,60 160,30 C 160,20 172,20 175,30 C 178,60 175,100 175,130 C 182,100 190,65 195,45 C 198,35 210,38 208,50 C 202,80 195,110 190,135 C 200,110 215,85 225,75 C 232,68 240,76 232,88 C 220,110 200,145 190,170 C 180,200 150,230 120,250 Z&quot; fill=&quot;#1e293b&quot; stroke=&quot;#eab308&quot; stroke-width=&quot;4&quot;/&gt;
+
+                        &lt;!-- Contracting Flexor Tendon Highlights --&gt;
+                        &lt;path d=&quot;M 140,140 Q 165,150 175,180&quot; stroke=&quot;#facc15&quot; stroke-width=&quot;4&quot; fill=&quot;none&quot;/&gt;
+                        &lt;path d=&quot;M 150,120 Q 170,130 180,160&quot; stroke=&quot;#facc15&quot; stroke-width=&quot;3&quot; fill=&quot;none&quot;/&gt;
+
+                        &lt;!-- Neuromuscular Action Pulse --&gt;
+                        &lt;circle cx=&quot;130&quot; cy=&quot;180&quot; r=&quot;10&quot; fill=&quot;#fef08a&quot; class=&quot;animate-ping&quot;/&gt;
+
+                        &lt;!-- Motion Effect Lines --&gt;
+                        &lt;path d=&quot;M 230,40 L 250,30&quot; stroke=&quot;#fef08a&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot;/&gt;
+                        &lt;path d=&quot;M 240,60 L 260,55&quot; stroke=&quot;#fef08a&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot;/&gt;
+
+                        &lt;!-- Label Overlay --&gt;
+                        &lt;g transform=&quot;translate(180, 180)&quot;&gt;
+                            &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;130&quot; height=&quot;24&quot; rx=&quot;6&quot; fill=&quot;#0f172a&quot; stroke=&quot;#facc15&quot; stroke-width=&quot;1.5&quot;/&gt;
+                            &lt;text x=&quot;65&quot; y=&quot;16&quot; text-anchor=&quot;middle&quot; fill=&quot;#fef08a&quot; font-size=&quot;10&quot; font-weight=&quot;bold&quot; font-family=&quot;sans-serif&quot;&gt;Hand Muscle Action&lt;/text&gt;
+                        &lt;/g&gt;
+                    &lt;/g&gt;
+                &lt;/svg&gt;
+                `
+            }
+        ];
+
+        let currentStage = 0;
+        let isAutoPlaying = false;
+        let autoPlayInterval = null;
+
+        // Initialize App UI
+        function initApp() {
+            renderPathwayGrid();
+            renderStage(0);
+        }
+
+        // Render Pathway Stage Cards Grid
+        function renderPathwayGrid() {
+            const grid = document.getElementById(&#x27;pathway-grid&#x27;);
+            grid.innerHTML = STAGES.map((s, idx) =&gt; `
+                &lt;button onclick=&quot;selectStage(${idx})&quot; id=&quot;node-${idx}&quot; class=&quot;svg-card-hover p-3 rounded-xl border text-left flex flex-col gap-2 relative overflow-hidden bg-white/80 dark:bg-slate-900/80 border-slate-200 dark:border-slate-800 transition&quot;&gt;
+                    &lt;div class=&quot;flex items-center justify-between&quot;&gt;
+                        &lt;span class=&quot;w-6 h-6 rounded-full font-mono text-xs font-bold flex items-center justify-center text-white&quot; style=&quot;background-color: ${s.color}&quot;&gt;${s.id}&lt;/span&gt;
+                        &lt;i class=&quot;fa-solid ${s.icon} text-slate-400&quot;&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;div class=&quot;font-bold text-xs text-slate-900 dark:text-slate-100&quot;&gt;${s.name}&lt;/div&gt;
+                        &lt;div class=&quot;text-[10px] text-slate-500 dark:text-slate-400 font-mono&quot;&gt;${s.location}&lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/button&gt;
+            `).join(&#x27;&#x27;);
+        }
+
+        // Render Active Stage Information
+        function renderStage(index) {
+            currentStage = index;
+            const stage = STAGES[index];
+
+            // Update Control Toolbar
+            document.getElementById(&#x27;stage-indicator&#x27;).innerText = `${index + 1} / ${STAGES.length}`;
+            document.getElementById(&#x27;btn-prev&#x27;).disabled = index === 0;
+            document.getElementById(&#x27;btn-next&#x27;).disabled = index === STAGES.length - 1;
+
+            // Update Signal Progress Bar &amp; Badge
+            document.getElementById(&#x27;progress-bar&#x27;).style.width = `${((index + 1) / STAGES.length) * 100}%`;
+            document.getElementById(&#x27;signal-badge&#x27;).innerText = `Active Stage: 0${index + 1}`;
+
+            // Highlight Active Node in Grid
+            STAGES.forEach((_, idx) =&gt; {
+                const node = document.getElementById(`node-${idx}`);
+                if (idx === index) {
+                    node.classList.add(&#x27;ring-2&#x27;, &#x27;ring-cyan-500&#x27;, &#x27;bg-slate-100&#x27;, &#x27;dark:bg-slate-800&#x27;);
+                    node.classList.remove(&#x27;bg-white/80&#x27;, &#x27;dark:bg-slate-900/80&#x27;);
+                } else {
+                    node.classList.remove(&#x27;ring-2&#x27;, &#x27;ring-cyan-500&#x27;, &#x27;bg-slate-100&#x27;, &#x27;dark:bg-slate-800&#x27;);
+                    node.classList.add(&#x27;bg-white/80&#x27;, &#x27;dark:bg-slate-900/80&#x27;);
+                }
+            });
+
+            // Update SVG Clip Art artwork display
+            const artDisplay = document.getElementById(&#x27;svg-art-display&#x27;);
+            artDisplay.style.opacity = &#x27;0&#x27;;
+            setTimeout(() =&gt; {
+                artDisplay.innerHTML = stage.svg;
+                artDisplay.style.opacity = &#x27;1&#x27;;
+            }, 120);
+
+            document.getElementById(&#x27;artwork-caption&#x27;).innerText = stage.caption;
+
+            // Update Educational Concept Panel
+            document.getElementById(&#x27;concept-stage-num&#x27;).innerText = `STAGE 0${stage.id} OF 06`;
+            document.getElementById(&#x27;concept-category&#x27;).innerText = stage.category;
+            document.getElementById(&#x27;concept-title&#x27;).innerText = stage.name;
+            document.getElementById(&#x27;concept-subtitle&#x27;).innerText = `${stage.location} • ${stage.subtitle}`;
+            document.getElementById(&#x27;concept-summary&#x27;).innerText = stage.summary;
+
+            // Mechanisms List
+            const mechContainer = document.getElementById(&#x27;concept-mechanisms&#x27;);
+            mechContainer.innerHTML = stage.mechanisms.map(m =&gt; `
+                &lt;div class=&quot;p-3 rounded-xl bg-slate-100/80 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800&quot;&gt;
+                    &lt;div class=&quot;font-bold text-xs text-cyan-600 dark:text-cyan-400 mb-0.5&quot;&gt;${m.title}&lt;/div&gt;
+                    &lt;div class=&quot;text-xs text-slate-600 dark:text-slate-400 leading-normal&quot;&gt;${m.desc}&lt;/div&gt;
+                &lt;/div&gt;
+            `).join(&#x27;&#x27;);
+
+            // Properties
+            document.getElementById(&#x27;prop-signal&#x27;).innerText = stage.signalType;
+            document.getElementById(&#x27;prop-cells&#x27;).innerText = stage.cellType;
+            document.getElementById(&#x27;prop-destination&#x27;).innerText = stage.destination;
+
+            // Takeaway
+            document.getElementById(&#x27;takeaway-text&#x27;).innerText = stage.takeaway;
+        }
+
+        // Navigation Handlers
+        function changeStage(delta) {
+            const next = currentStage + delta;
+            if (next &gt;= 0 &amp;&amp; next &lt; STAGES.length) {
+                renderStage(next);
+            }
+        }
+
+        function selectStage(index) {
+            if (isAutoPlaying) stopAutoPlay();
+            renderStage(index);
+        }
+
+        // Auto Pulse Simulation Mode
+        function toggleAutoPlay() {
+            if (isAutoPlaying) {
+                stopAutoPlay();
+            } else {
+                startAutoPlay();
+            }
+        }
+
+        function startAutoPlay() {
+            isAutoPlaying = true;
+            document.getElementById(&#x27;play-icon&#x27;).className = &#x27;fa-solid fa-pause&#x27;;
+            document.getElementById(&#x27;play-text&#x27;).innerText = &#x27;Pause&#x27;;
+            autoPlayInterval = setInterval(() =&gt; {
+                const next = (currentStage + 1) % STAGES.length;
+                renderStage(next);
+            }, 3200);
+        }
+
+        function stopAutoPlay() {
+            isAutoPlaying = false;
+            document.getElementById(&#x27;play-icon&#x27;).className = &#x27;fa-solid fa-play&#x27;;
+            document.getElementById(&#x27;play-text&#x27;).innerText = &#x27;Auto Pulse&#x27;;
+            if (autoPlayInterval) clearInterval(autoPlayInterval);
+        }
+
+        // Light/Dark Theme Switcher
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById(&#x27;theme-icon&#x27;);
+            if (html.classList.contains(&#x27;dark&#x27;)) {
+                html.classList.remove(&#x27;dark&#x27;);
+                html.classList.add(&#x27;light&#x27;);
+                icon.className = &#x27;fa-solid fa-sun text-amber-500&#x27;;
+            } else {
+                html.classList.remove(&#x27;light&#x27;);
+                html.classList.add(&#x27;dark&#x27;);
+                icon.className = &#x27;fa-solid fa-moon&#x27;;
+            }
+        }
+
+        window.onload = function() {
+            initApp();
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;"
+            style="
+                display:block;
+                width:100%;
+                height:900px;
+                border:0;
+                border-radius:20px;
+            "
+            loading="lazy"
+        ></iframe>
+    </div>
+</section>
 
 <!-- =========================
      PARTICIPANT DATA
