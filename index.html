@@ -9,6 +9,10 @@
 
 <title>Human Reaction Lab — Ruler Drop Test</title>
 
+<!-- KaTeX CSS & JS for rendering LaTeX equations -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 
@@ -571,6 +575,40 @@ button {
 }
 
 /* =========================
+   FORMULA CORNER
+========================= */
+
+.formula-corner {
+    background: rgba(16, 36, 58, 0.75);
+    border: 1px solid rgba(124, 92, 255, 0.3);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: inset 0 0 20px rgba(124, 92, 255, 0.05);
+}
+
+.formula-title {
+    font-family: "Space Grotesk";
+    font-size: 15px;
+    color: #78d8ff;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.formula-display {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 16px;
+    padding: 10px;
+    background: rgba(7, 17, 31, 0.6);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+}
+
+/* =========================
    MAIN GRID
 ========================= */
 
@@ -697,13 +735,26 @@ input:focus {
     display: grid;
 
     grid-template-columns:
-        1.1fr 1fr 1fr auto;
+        1.1fr 1fr auto;
 
     gap: 10px;
 
-    align-items: end;
+    align-items: center;
 
     margin-bottom: 10px;
+}
+
+.calculated-time {
+    padding: 11px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #35d07f;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
 }
 
 .row-actions {
@@ -788,6 +839,43 @@ input:focus {
 
 .after-text {
     color: var(--after);
+}
+
+/* =========================
+   EXP QUESTION ENHANCEMENTS
+========================= */
+
+.exp-box {
+    background: rgba(9, 23, 40, 0.6);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 14px;
+}
+
+.exp-box h4 {
+    margin: 0 0 8px 0;
+    font-family: "Space Grotesk";
+    color: #78d8ff;
+    font-size: 15px;
+}
+
+.var-table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.var-table td {
+    padding: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.var-table td:first-child {
+    font-weight: 700;
+    color: #aebdd0;
+    width: 35%;
 }
 
 /* =========================
@@ -1006,18 +1094,22 @@ canvas {
     inset: 0;
 
     background:
-        rgba(1,7,13,.78);
+        rgba(1,7,13,.88);
 
     backdrop-filter:
         blur(12px);
 
-    display: grid;
+    display: none;
 
     place-items: center;
 
     z-index: 100;
 
     padding: 18px;
+}
+
+.modal.show-modal {
+    display: grid !important;
 }
 
 .modal-card {
@@ -1093,10 +1185,6 @@ canvas {
     font-size: 13px;
 
     line-height: 1.5;
-}
-
-.hidden {
-    display: none !important;
 }
 
 /* =========================
@@ -1338,7 +1426,7 @@ canvas {
             class="btn"
             onclick="downloadGraph()"
         >
-            🖼️ Download Graph
+            🖼 Download Graph
         </button>
 
         <button
@@ -1561,6 +1649,17 @@ canvas {
 
     </div>
 
+    <!-- Formula Corner -->
+    <div class="formula-corner">
+        <div class="formula-title">
+            📐 Formula Corner
+        </div>
+        <div class="formula-display">
+            <span id="latex-formula-1"></span>
+            <span id="latex-formula-2"></span>
+        </div>
+    </div>
+
 
     <div class="form-grid">
 
@@ -1586,7 +1685,7 @@ canvas {
     >
 
         <label style="color:#7bd9ff">
-            Before Exercise — reaction times (ms)
+            Before Exercise — Distance Fallen (cm)
         </label>
 
         <div id="beforeInputs"></div>
@@ -1607,7 +1706,7 @@ canvas {
     >
 
         <label style="color:#ff9ab4">
-            After Exercise — reaction times (ms)
+            After Exercise — Distance Fallen (cm)
         </label>
 
         <div id="afterInputs"></div>
@@ -1753,28 +1852,48 @@ canvas {
         <div class="panel-title">
 
             <h3>
-                🧪 Experimental Question
+                🧪 Experimental Investigation
             </h3>
 
         </div>
 
-        <p
-            class="muted"
-            style="
-                line-height:1.7;
-                margin-bottom:0;
-            "
-        >
+        <div class="exp-box">
+            <h4>🔬 Central Research Question</h4>
+            <p class="muted" style="margin:0 0 10px 0; font-size:13.5px; line-height:1.6;">
+                How does physical exertion (e.g., 2 minutes of intense jumping jacks/running on spot) affect the visual-motor reaction time of human subjects?
+            </p>
 
-            <b style="color:white">
-                Hypothesis:
-            </b>
+            <h4>🧠 Biological & Physiological Hypothesis</h4>
+            <p class="muted" style="margin:0 0 10px 0; font-size:13px; line-height:1.6;">
+                Physical exercise elevates heart rate and oxygenated blood circulation to the primary motor cortex. We hypothesize that moderate physical exertion will <strong style="color:#75eda9">decrease reaction time</strong> due to enhanced neural signal transmission speed across synapses. However, severe physical fatigue may reverse this effect.
+            </p>
 
-            After exercise, participants may show a change in
-            reaction time because physical activity can alter
-            alertness and physiological arousal.
+            <h4>⚡ Visual-Motor Circuit Pathway</h4>
+            <p class="muted" style="margin:0 0 10px 0; font-size:12.5px; line-height:1.5;">
+                <code style="color:#78d8ff">Photoreceptors in Retina</code> ➔ 
+                <code style="color:#78d8ff">Optic Nerve</code> ➔ 
+                <code style="color:#78d8ff">Visual Cortex (Occipital)</code> ➔ 
+                <code style="color:#78d8ff">Motor Cortex (Frontal)</code> ➔ 
+                <code style="color:#78d8ff">Spinal Cord</code> ➔ 
+                <code style="color:#78d8ff">Effector Hand Muscles</code>
+            </p>
 
-        </p>
+            <h4>📊 Experimental Variables</h4>
+            <table class="var-table">
+                <tr>
+                    <td>Independent Variable</td>
+                    <td>Physical Exercise State (Resting vs Post-exercise)</td>
+                </tr>
+                <tr>
+                    <td>Dependent Variable</td>
+                    <td>Ruler drop distance d (cm) & Calculated reaction time t (ms)</td>
+                </tr>
+                <tr>
+                    <td>Controlled Variables</td>
+                    <td>Ruler drop height, visual focus point, release unpredictability</td>
+                </tr>
+            </table>
+        </div>
 
     </div>
 
@@ -1901,6 +2020,7 @@ function contactPerson(name, phone) {
 
 const STORAGE_KEY = "humanReactionLabData_v1";
 
+// Strictly empty initial dataset by default
 let participants = JSON.parse(
     localStorage.getItem(STORAGE_KEY) || "[]"
 );
@@ -1945,6 +2065,14 @@ function average(array) {
     return array.reduce((a, b) => a + b, 0) / array.length;
 }
 
+function calculateReactionTime(distCm) {
+    if (distCm === null || distCm <= 0) return null;
+    const dMeters = distCm / 100;
+    const g = 9.8;
+    const tSeconds = Math.sqrt((2 * dMeters) / g);
+    return Math.round(tSeconds * 1000); // 3 digits in milliseconds
+}
+
 
 /* =========================================================
    SMOOTH SCROLL NAVIGATION
@@ -1962,7 +2090,7 @@ function scrollToSection(id) {
 
 
 /* =========================================================
-   DISPLAY MODE
+   DISPLAY MODE MODAL LOGIC
 ========================================================= */
 
 function setMode(newMode) {
@@ -1971,8 +2099,7 @@ function setMode(newMode) {
 
     const modal = $("modeModal");
     if (modal) {
-        modal.classList.add("hidden");
-        modal.style.display = "none";
+        modal.classList.remove("show-modal");
     }
 
     document.body.dataset.mode = newMode;
@@ -1987,9 +2114,7 @@ function setMode(newMode) {
 function showMode() {
     const modal = $("modeModal");
     if (!modal) return;
-
-    modal.classList.remove("hidden");
-    modal.style.display = "grid";
+    modal.classList.add("show-modal");
 }
 
 
@@ -1999,10 +2124,29 @@ function showMode() {
 
 function valuesFrom(type) {
     return [
-        ...document.querySelectorAll("#" + type + "Inputs input")
+        ...document.querySelectorAll("#" + type + "Inputs .data-row")
     ]
-    .map(input => num(input.value))
+    .map(row => {
+        const distInput = row.querySelector("input");
+        const dist = num(distInput ? distInput.value : null);
+        return calculateReactionTime(dist);
+    })
     .filter(value => value !== null);
+}
+
+function updateRowTime(inputEl) {
+    const row = inputEl.closest(".data-row");
+    const display = row.querySelector(".calculated-time");
+    const dist = num(inputEl.value);
+
+    if (dist !== null) {
+        const timeMs = calculateReactionTime(dist);
+        display.textContent = `⏱️ ${timeMs} ms`;
+        display.style.color = "#35d07f";
+    } else {
+        display.textContent = "⏱ — ms";
+        display.style.color = "var(--muted)";
+    }
 }
 
 function addInput(type, value = "") {
@@ -2016,14 +2160,14 @@ function addInput(type, value = "") {
                 type="number"
                 min="0"
                 step="0.1"
-                placeholder="e.g. 245"
+                placeholder="Distance (cm)"
                 value="${value}"
+                oninput="updateRowTime(this)"
             >
         </div>
-        <div class="muted" style="padding-bottom:12px">
-            milliseconds
+        <div class="calculated-time">
+            ⏱ — ms
         </div>
-        <div></div>
         <div class="row-actions">
             <button
                 class="mini"
@@ -2036,6 +2180,11 @@ function addInput(type, value = "") {
     `;
 
     wrap.appendChild(row);
+
+    const inputField = row.querySelector("input");
+    if (value) {
+        updateRowTime(inputField);
+    }
 }
 
 
@@ -2065,7 +2214,7 @@ function addParticipant() {
     const after = valuesFrom("after");
 
     if (!before.length || !after.length) {
-        toast("Please enter at least one valid trial for both sections.");
+        toast("Please enter at least one valid distance for both sections.");
         return;
     }
 
@@ -2093,7 +2242,7 @@ function addParticipant() {
 
 
 /* =========================================================
-   EXAMPLE DATA
+   EXAMPLE DATA (LOADED ONLY UPON EXPLICIT CLICK)
 ========================================================= */
 
 function loadExample() {
@@ -2101,50 +2250,50 @@ function loadExample() {
         {
             id: 1,
             name: "Aarav",
-            before: 318,
-            after: 286,
-            beforeTrials: [320, 315, 319],
-            afterTrials: [284, 289, 285]
+            before: 254,
+            after: 206,
+            beforeTrials: [257, 249, 256],
+            afterTrials: [203, 210, 205]
         },
         {
             id: 2,
             name: "Diya",
-            before: 274,
-            after: 251,
-            beforeTrials: [278, 270, 274],
-            afterTrials: [249, 254, 250]
+            before: 202,
+            after: 169,
+            beforeTrials: [208, 197, 202],
+            afterTrials: [166, 173, 168]
         },
         {
             id: 3,
             name: "Kabir",
-            before: 342,
-            after: 329,
-            beforeTrials: [350, 338, 338],
-            afterTrials: [325, 330, 332]
+            before: 294,
+            after: 272,
+            beforeTrials: [308, 287, 287],
+            afterTrials: [265, 274, 277]
         },
         {
             id: 4,
             name: "Meera",
-            before: 295,
-            after: 307,
-            beforeTrials: [290, 298, 297],
-            afterTrials: [304, 309, 308]
+            before: 233,
+            after: 252,
+            beforeTrials: [225, 238, 236],
+            afterTrials: [247, 255, 254]
         },
         {
             id: 5,
             name: "Rohan",
-            before: 261,
-            after: 239,
-            beforeTrials: [258, 264, 261],
-            afterTrials: [237, 241, 239]
+            before: 183,
+            after: 153,
+            beforeTrials: [179, 187, 183],
+            afterTrials: [150, 156, 153]
         },
         {
             id: 6,
             name: "Tara",
-            before: 386,
-            after: 351,
-            beforeTrials: [390, 381, 387],
-            afterTrials: [347, 352, 354]
+            before: 374,
+            after: 309,
+            beforeTrials: [382, 365, 376],
+            afterTrials: [302, 311, 314]
         }
     ];
 
@@ -2415,7 +2564,7 @@ function drawChart() {
         ctx.fillStyle = "#7e91a7";
         ctx.font = "600 15px Inter";
         ctx.textAlign = "center";
-        ctx.fillText("Add a participant to reveal the observatory graph.", w / 2, h / 2);
+        ctx.fillText("Add a participant or click 'Load Example' to reveal the observatory graph.", w / 2, h / 2);
         return;
     }
 
@@ -2580,21 +2729,22 @@ window.addEventListener("resize", drawChart);
    INITIALIZATION
 ========================================================= */
 
-resetForm();
-render();
-
-// Manage Modal visibility based on mode selection
-const modeModal = $("modeModal");
-if (modeModal) {
-    if (mode) {
-        modeModal.classList.add("hidden");
-        modeModal.style.display = "none";
-        document.body.dataset.mode = mode;
-    } else {
-        modeModal.classList.remove("hidden");
-        modeModal.style.display = "grid";
+window.addEventListener("DOMContentLoaded", () => {
+    // Render LaTeX formulas dynamically via KaTeX
+    if (typeof katex !== "undefined") {
+        katex.render("d = \\frac{1}{2}g t^2", $("latex-formula-1"), { displayMode: true });
+        katex.render("t = \\sqrt{\\frac{2d}{g}}", $("latex-formula-2"), { displayMode: true });
     }
-}
+
+    resetForm();
+    render();
+
+    // Force display mode selection dialog box to show on website load
+    const modeModal = $("modeModal");
+    if (modeModal) {
+        modeModal.classList.add("show-modal");
+    }
+});
 </script>
 
 </body>
